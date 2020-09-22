@@ -9,10 +9,9 @@ import kotlin.reflect.KProperty
 
 /**
  * Created by xuhao on 2017/12/11.
- * desc:kotlin委托属性+SharedPreference实例
+ * desc: Kotlin delegate attribute + SharedPreference instance
  */
 class Preference<T>(val name:String, private val default:T) {
-
 
     companion object {
         private const val file_name = "kotlin_mvp_file"
@@ -20,23 +19,21 @@ class Preference<T>(val name:String, private val default:T) {
         private val prefs: SharedPreferences by lazy {
             MyApplication.context.getSharedPreferences(file_name, Context.MODE_PRIVATE)
         }
+
         /**
-         * 删除全部数据
+         * Delete all data
          */
         fun clearPreference(){
             prefs.edit().clear().apply()
         }
 
         /**
-         * 根据key删除存储数据
+         * Delete stored data according to key
          */
         fun clearPreference(key : String){
             prefs.edit().remove(key).apply()
         }
     }
-
-
-
 
     operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
         return getSharedPreferences(name, default)
@@ -71,11 +68,8 @@ class Preference<T>(val name:String, private val default:T) {
         return res as T
     }
 
-
-
     /**
-     * 序列化对象
-
+     * Serialized object
      * @param person
      * *
      * @return
@@ -96,8 +90,7 @@ class Preference<T>(val name:String, private val default:T) {
     }
 
     /**
-     * 反序列化对象
-
+     * Deserialize object
      * @param str
      * *
      * @return
@@ -122,7 +115,7 @@ class Preference<T>(val name:String, private val default:T) {
 
 
     /**
-     * 查询某个key是否已经存在
+     * Query whether a key already exists
      *
      * @param key
      * @return
@@ -132,7 +125,7 @@ class Preference<T>(val name:String, private val default:T) {
     }
 
     /**
-     * 返回所有的键值对
+     * Return all key-value pairs
      *
      * @param context
      * @return

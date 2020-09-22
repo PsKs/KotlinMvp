@@ -41,5 +41,3 @@ data class AuthorInfoBean(val tabInfo: TabInfo,
                       val itemId: Int,
                       val shielded: Boolean) : Serializable
 }
-
-

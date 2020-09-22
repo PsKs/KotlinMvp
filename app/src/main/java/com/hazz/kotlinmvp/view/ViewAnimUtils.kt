@@ -14,9 +14,8 @@ import android.view.animation.AccelerateDecelerateInterpolator
 
 /**
  * Created by xuhao on 2017/12/1.
- * desc: View 动画工具类
+ * desc: View animation tools
  */
-
 object ViewAnimUtils {
 
     interface OnRevealAnimationListener {
@@ -24,8 +23,6 @@ object ViewAnimUtils {
 
         fun onRevealShow()
     }
-
-
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     fun animateRevealShow(
@@ -37,7 +34,7 @@ object ViewAnimUtils {
 
         val finalRadius = Math.hypot(view.width.toDouble(), view.height.toDouble()).toFloat()
 
-        // 设置圆形显示动画
+        // Set circular display animation
         val anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, startRadius.toFloat(), finalRadius)
         anim.duration = 300
         anim.interpolator = AccelerateDecelerateInterpolator()
@@ -57,7 +54,7 @@ object ViewAnimUtils {
         anim.start()
     }
 
-    // 圆圈凝聚效果
+    // Circle cohesion effect
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     fun animateRevealHide(
             context: Context, view: View,
@@ -67,7 +64,7 @@ object ViewAnimUtils {
         val cx = (view.left + view.right) / 2
         val cy = (view.top + view.bottom) / 2
         val initialRadius = view.width
-        // 与入场动画的区别就是圆圈起始和终止的半径相反
+        // The difference with the entrance animation is that the radius of the start and end of the circle is opposite
         val anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, initialRadius.toFloat(), finalRadius.toFloat())
         anim.duration = 300
         anim.interpolator = AccelerateDecelerateInterpolator()

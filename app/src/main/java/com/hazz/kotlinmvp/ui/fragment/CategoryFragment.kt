@@ -18,23 +18,18 @@ import kotlinx.android.synthetic.main.fragment_category.*
 
 /**
  * Created by xuhao on 2017/11/8.
- * 分类
+ * Category
  */
-
 class CategoryFragment : BaseFragment(), CategoryContract.View {
 
-
     private val mPresenter by lazy { CategoryPresenter() }
-
     private val mAdapter by lazy { activity?.let { CategoryAdapter(it, mCategoryList, R.layout.item_category) } }
 
     private var mTitle: String? = null
     private var mCategoryList = ArrayList<CategoryBean>()
 
-
-
     /**
-     * 伴生对象
+     * Companion object
      */
     companion object {
         fun getInstance(title: String): CategoryFragment {
@@ -46,14 +41,11 @@ class CategoryFragment : BaseFragment(), CategoryContract.View {
         }
     }
 
-
     override fun getLayoutId(): Int = R.layout.fragment_category
-
 
     @Suppress("DEPRECATION")
     override fun initView() {
         mPresenter.attachView(this)
-
 
         mLayoutStatusView = multipleStatusView
 
@@ -70,7 +62,7 @@ class CategoryFragment : BaseFragment(), CategoryContract.View {
 
         })
 
-        //状态栏透明和间距处理
+        //Status bar transparency and spacing processing
 //        StatusBarUtil.darkMode(activity)
 //        StatusBarUtil.setPaddingSmart(activity, toolbar)
 //        StatusBarUtil.setPaddingSmart(activity,mRecyclerView)
@@ -78,8 +70,7 @@ class CategoryFragment : BaseFragment(), CategoryContract.View {
     }
 
     override fun lazyLoad() {
-
-        //获取分类信息
+        // Get classification information
         mPresenter.getCategoryData()
     }
 
@@ -92,12 +83,11 @@ class CategoryFragment : BaseFragment(), CategoryContract.View {
     }
 
     /**
-     * 显示分类信息
+     * Display classification information
      */
     override fun showCategory(categoryList: ArrayList<CategoryBean>) {
         mCategoryList = categoryList
         mAdapter?.setData(mCategoryList)
-
     }
 
     override fun showError(errorMsg: String,errorCode:Int) {
@@ -113,6 +103,4 @@ class CategoryFragment : BaseFragment(), CategoryContract.View {
         super.onDestroy()
         mPresenter.detachView()
     }
-
-
 }

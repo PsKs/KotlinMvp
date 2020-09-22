@@ -8,12 +8,12 @@ import io.reactivex.Observable
 
 /**
  * Created by xuhao on 2017/11/30.
- * desc: 关注Model
+ * desc: Follow Model
  */
 class FollowModel {
 
     /**
-     * 获取关注信息
+     * Get follow information
      */
     fun requestFollowList(): Observable<HomeBean.Issue> {
 
@@ -22,12 +22,10 @@ class FollowModel {
     }
 
     /**
-     * 加载更多
+     * load more
      */
     fun loadMoreData(url:String):Observable<HomeBean.Issue>{
         return RetrofitManager.service.getIssueData(url)
                 .compose(SchedulerUtils.ioToMain())
     }
-
-
 }

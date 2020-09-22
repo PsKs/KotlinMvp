@@ -15,7 +15,7 @@ import com.hazz.kotlinmvp.view.recyclerview.adapter.CommonAdapter
 
 /**
  * Created by xuhao on 2017/12/7.
- * desc: 关注 adapter
+ * desc: Follow adapter
  */
 class FollowAdapter(context: Context, dataList: ArrayList<HomeBean.Issue.Item>)
     : CommonAdapter<HomeBean.Issue.Item>(context, dataList, object : MultipleType<HomeBean.Issue.Item> {
@@ -24,37 +24,33 @@ class FollowAdapter(context: Context, dataList: ArrayList<HomeBean.Issue.Item>)
             item.type == "videoCollectionWithBrief" ->
                 R.layout.item_follow
             else ->
-                throw IllegalAccessException("Api 解析出错了，出现其他类型")
+                throw IllegalAccessException("Api parsing error, other types appear")
         }
     }
 }) {
-
 
     fun addData(dataList: ArrayList<HomeBean.Issue.Item>) {
         this.mData.addAll(dataList)
         notifyDataSetChanged()
     }
 
-
     /**
-     * 绑定数据
+     * Bind data
      */
     override fun bindData(holder: ViewHolder, data: HomeBean.Issue.Item, position: Int) {
 
         when {
             data.type == "videoCollectionWithBrief" -> setAuthorInfo(data, holder)
         }
-
     }
 
-
     /**
-     * 加载作者信息
+     * Load author information
      */
     private fun setAuthorInfo(item: HomeBean.Issue.Item, holder: ViewHolder) {
         val headerData = item.data?.header
         /**
-         * 加载作者头像
+         * Load author avatar
          */
         holder.setImagePath(R.id.iv_avatar, object : ViewHolder.HolderImageLoader(headerData?.icon!!) {
             override fun loadImage(iv: ImageView, path: String) {
@@ -71,11 +67,9 @@ class FollowAdapter(context: Context, dataList: ArrayList<HomeBean.Issue.Item>)
 
         val recyclerView = holder.getView<RecyclerView>(R.id.fl_recyclerView)
         /**
-         * 设置嵌套水平的 RecyclerView
+         * Set the nesting level of RecyclerView
          */
         recyclerView.layoutManager = LinearLayoutManager(mContext as Activity,LinearLayoutManager.HORIZONTAL,false)
         recyclerView.adapter = FollowHorizontalAdapter(mContext,item.data.itemList,R.layout.item_follow_horizontal)
-
     }
-
 }

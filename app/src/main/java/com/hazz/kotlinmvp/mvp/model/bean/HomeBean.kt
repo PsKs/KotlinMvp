@@ -4,7 +4,7 @@ import java.io.Serializable
 
 /**
 * Created by xuhao on 2017/11/21.
-* desc: 首页 Bean（视频详情，相关等）
+* desc: Home Bean (video details, related, etc.)
 */
 data class HomeBean(val issueList: ArrayList<Issue>, val nextPageUrl: String, val nextPublishTime: Long, val newestIssueType: String, val dialog: Any){
 
@@ -83,17 +83,12 @@ data class HomeBean(val issueList: ArrayList<Issue>, val nextPageUrl: String, va
                 data class Url(val size: Long) : Serializable
 
                 data class Header(val id: Int,val icon: String,val iconType: String,val description: String,val title: String,val font: String,val cover: String,val label: Label,
-                                  val actionUrl: String ,val subtitle:String, val labelList: ArrayList<Label>): Serializable{
+                                  val actionUrl: String ,val subtitle:String, val labelList: ArrayList<Label>): Serializable {
                     data class Label(val text: String,val card: String,val detial: Any,val actionUrl: Any)
                 }
-
             }
         }
-
-
     }
-
-
 }
 
 

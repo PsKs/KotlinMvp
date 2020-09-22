@@ -15,12 +15,9 @@ import kotlinx.android.synthetic.main.layout_recyclerview.*
 
 /**
  * Created by xuhao on 2017/12/7.
- * desc: 关注
+ * desc: Follow
  */
 class FollowFragment : BaseFragment(), FollowContract.View {
-
-
-
 
     private var mTitle: String? = null
 
@@ -30,12 +27,10 @@ class FollowFragment : BaseFragment(), FollowContract.View {
 
     private val mFollowAdapter by lazy { activity?.let { FollowAdapter(it,itemList) } }
 
-
     /**
-     * 是否加载更多
+     * Whether to load more
      */
     private var loadingMore = false
-
 
     init {
         mPresenter.attachView(this)
@@ -54,10 +49,9 @@ class FollowFragment : BaseFragment(), FollowContract.View {
     override fun getLayoutId(): Int = R.layout.layout_recyclerview
 
     override fun initView() {
-
         mRecyclerView.layoutManager = LinearLayoutManager(activity)
         mRecyclerView.adapter = mFollowAdapter
-        //实现自动加载
+        // Realize automatic loading
         mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
@@ -71,17 +65,14 @@ class FollowFragment : BaseFragment(), FollowContract.View {
         })
 
         mLayoutStatusView = multipleStatusView
-
     }
 
     override fun lazyLoad() {
         mPresenter.requestFollowList()
     }
 
-
     override fun showLoading() {
         multipleStatusView.showLoading()
-
     }
 
     override fun dismissLoading() {
@@ -95,7 +86,7 @@ class FollowFragment : BaseFragment(), FollowContract.View {
     }
 
     /**
-     * 显示错误信息
+     * Show error message
      */
     override fun showError(errorMsg: String, errorCode: Int) {
         showToast(errorMsg)

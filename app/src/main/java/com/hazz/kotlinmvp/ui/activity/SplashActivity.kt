@@ -17,11 +17,10 @@ import pub.devrel.easypermissions.EasyPermissions
 
 /**
  * Created by xuhao on 2017/12/5.
- * desc: 启动页
+ * desc: Start page
  */
 
 class SplashActivity : BaseActivity() {
-
 
     private var textTypeface: Typeface?=null
 
@@ -33,7 +32,6 @@ class SplashActivity : BaseActivity() {
         textTypeface = Typeface.createFromAsset(MyApplication.context.assets, "fonts/Lobster-1.4.otf")
         descTypeFace = Typeface.createFromAsset(MyApplication.context.assets, "fonts/FZLanTingHeiS-L-GB-Regular.TTF")
     }
-
 
     override fun layoutId(): Int = R.layout.activity_splash
 
@@ -48,7 +46,7 @@ class SplashActivity : BaseActivity() {
         tv_splash_desc.typeface = descTypeFace
         tv_version_name.text = "v${AppUtils.getVerName(MyApplication.context)}"
 
-        //渐变展示启动屏
+        // Gradient display start screen
         alphaAnimation= AlphaAnimation(0.3f, 1.0f)
         alphaAnimation?.duration = 2000
         alphaAnimation?.setAnimationListener(object : AnimationListener {
@@ -69,7 +67,6 @@ class SplashActivity : BaseActivity() {
 
     }
 
-
     fun redirectTo() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
@@ -77,15 +74,14 @@ class SplashActivity : BaseActivity() {
     }
 
     /**
-     * 6.0以下版本(系统自动申请) 不会弹框
-     * 有些厂商修改了6.0系统申请机制，他们修改成系统自动申请权限了
+     * Versions below 6.0 (automatic application by the system) will not pop up
+     * Some manufacturers have modified the 6.0 system application mechanism,
+     * and they have modified the system to automatically apply for permissions
      */
     private fun checkPermission(){
         val perms = arrayOf(Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        EasyPermissions.requestPermissions(this, "KotlinMvp应用需要以下权限，请允许", 0, *perms)
-
+        EasyPermissions.requestPermissions(this, "KotlinMvp application requires the following permissions, please allow.", 0, *perms)
     }
-
 
     override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
         if (requestCode == 0) {
@@ -99,6 +95,4 @@ class SplashActivity : BaseActivity() {
             }
         }
     }
-
-
 }

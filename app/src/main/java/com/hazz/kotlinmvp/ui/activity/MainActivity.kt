@@ -20,16 +20,13 @@ import java.util.*
  * created: 2017/10/25
  * desc:
  */
-
-
 class MainActivity : BaseActivity() {
 
+    private val mTitles = arrayOf("Daily selection", "Find", "Popular", "Me")
 
-    private val mTitles = arrayOf("每日精选", "发现", "热门", "我的")
-
-    // 未被选中的图标
+    // Unselected icon
     private val mIconUnSelectIds = intArrayOf(R.mipmap.ic_home_normal, R.mipmap.ic_discovery_normal, R.mipmap.ic_hot_normal, R.mipmap.ic_mine_normal)
-    // 被选中的图标
+    // Selected icon
     private val mIconSelectIds = intArrayOf(R.mipmap.ic_home_selected, R.mipmap.ic_discovery_selected, R.mipmap.ic_hot_selected, R.mipmap.ic_mine_selected)
 
     private val mTabEntities = ArrayList<CustomTabEntity>()
@@ -39,9 +36,8 @@ class MainActivity : BaseActivity() {
     private var mHotFragment: HotFragment? = null
     private var mMineFragment: MineFragment? = null
 
-    //默认为0
+    // Default is 0
     private var mIndex = 0
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
@@ -51,60 +47,57 @@ class MainActivity : BaseActivity() {
         initTab()
         tab_layout.currentTab = mIndex
         switchFragment(mIndex)
-
     }
 
     override fun layoutId(): Int {
         return R.layout.activity_main
     }
 
-
-    //初始化底部菜单
+    // Initialize the bottom menu
     private fun initTab() {
         (0 until mTitles.size)
                 .mapTo(mTabEntities) { TabEntity(mTitles[it], mIconSelectIds[it], mIconUnSelectIds[it]) }
-        //为Tab赋值
+        // Assign a value to Tab
         tab_layout.setTabData(mTabEntities)
         tab_layout.setOnTabSelectListener(object : OnTabSelectListener {
             override fun onTabSelect(position: Int) {
-                //切换Fragment
+                // Switch Fragment
                 switchFragment(position)
             }
 
             override fun onTabReselect(position: Int) {
-
             }
         })
     }
 
     /**
-     * 切换Fragment
-     * @param position 下标
+     * Toggle Fragment
+     * @param position Subscript
      */
     private fun switchFragment(position: Int) {
         val transaction = supportFragmentManager.beginTransaction()
         hideFragments(transaction)
         when (position) {
-            0 // 首页
+            0 // Home
             -> mHomeFragment?.let {
                 transaction.show(it)
             } ?: HomeFragment.getInstance(mTitles[position]).let {
                 mHomeFragment = it
                 transaction.add(R.id.fl_container, it, "home")
             }
-            1  //发现
+            1  // discovery
             -> mDiscoveryFragment?.let {
                 transaction.show(it)
             } ?: DiscoveryFragment.getInstance(mTitles[position]).let {
                 mDiscoveryFragment = it
                 transaction.add(R.id.fl_container, it, "discovery") }
-            2  //热门
+            2  //Popular
             -> mHotFragment?.let {
                 transaction.show(it)
             } ?: HotFragment.getInstance(mTitles[position]).let {
                 mHotFragment = it
                 transaction.add(R.id.fl_container, it, "hot") }
-            3 //我的
+            3 //My
             -> mMineFragment?.let {
                 transaction.show(it)
             } ?: MineFragment.getInstance(mTitles[position]).let {
@@ -123,7 +116,7 @@ class MainActivity : BaseActivity() {
 
 
     /**
-     * 隐藏所有的Fragment
+     * Hide all fragments
      * @param transaction transaction
      */
     private fun hideFragments(transaction: FragmentTransaction) {
@@ -138,7 +131,8 @@ class MainActivity : BaseActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
 //        showToast("onSaveInstanceState->"+mIndex)
 //        super.onSaveInstanceState(outState)
-        //记录fragment的位置,防止崩溃 activity被系统回收时，fragment错乱
+        // Record the location of the fragment to prevent crashing.
+        // When the activity is recycled by the system, the fragment disorder
         if (tab_layout != null) {
             outState.putInt("currTabIndex", mIndex)
         }
@@ -164,12 +158,10 @@ class MainActivity : BaseActivity() {
                 finish()
             } else {
                 mExitTime = System.currentTimeMillis()
-                showToast("再按一次退出程序")
+                showToast("Press again to exit the program")
             }
             return true
         }
         return super.onKeyDown(keyCode, event)
     }
-
-
 }

@@ -18,10 +18,16 @@ import java.security.MessageDigest
 /**
  * Created by xuhao on 2017/11/29.
  * desc:
- * 1.永远不要把transform()传给你的原始resource或原始Bitmap给recycle()了，更不要放回BitmapPool，因为这些都自动完成了。值得注意的是，任何从BitmapPool取出的用于自定义图片变换的辅助Bitmap，如果不经过transform()方法返回，就必须主动放回BitmapPool或者调用recycle()回收。
- * 2.如果你从BitmapPool拿出多个Bitmap或不使用你从BitmapPool拿出的一个Bitmap，一定要返回extras给BitmapPool。
- * 3.如果你的图片处理没有替换原始resource(例如由于一张图片已经匹配了你想要的尺寸，你需要提前返回), transform()`方法就返回原始resource或原始Bitmap。
+ * 1. Never pass transform() to your original resource or original Bitmap to recycle(),
+ *  let alone put it back into BitmapPool, because these are all done automatically.
+ *  It is worth noting that any auxiliary Bitmap used for custom image transformation taken from
+ *  BitmapPool must be actively put back into BitmapPool or recycled by calling recycle() if it is not returned by the transform() method.
  *
+ * 2. If you take out multiple Bitmaps from BitmapPool or do not use one Bitmap that you take out from BitmapPool, you must return extras to BitmapPool.
+ *
+ * 3. If your image processing does not replace the original resource
+ *  (for example, because an image has matched the size you want, you need to return in advance),
+ *  the transform()` method will return the original resource or the original Bitmap.
  *
  */
 
@@ -37,11 +43,9 @@ class GlideRoundTransform @JvmOverloads constructor(dp: Int = 4) : BitmapTransfo
         return roundCrop(pool, toTransform)
     }
 
-
     override fun updateDiskCacheKey(messageDigest: MessageDigest) {
 
     }
-
 
     private fun roundCrop(pool: BitmapPool, source: Bitmap?): Bitmap? {
         if (source == null) return null
@@ -59,5 +63,4 @@ class GlideRoundTransform @JvmOverloads constructor(dp: Int = 4) : BitmapTransfo
         canvas.drawRoundRect(rectF, radius, radius, paint)
         return result
     }
-
 }

@@ -7,21 +7,21 @@ import java.lang.reflect.Method
 import android.util.Base64
 import java.io.*
 
-
 /**
  * Created by xuhao on 2017/12/11.
- * desc:kotlin委托属性+SharedPreference实例(记录视频观看记录的）
+ * desc: Kotlin delegate attribute + SharedPreference instance (recording video viewing records)
  */
 class WatchHistoryUtils {
 
     companion object {
         /**
-         * 保存在手机里面的文件名
+         * File name saved in the phone
          */
         private val FILE_NAME = "kotlin_mvp_file"
 
         /**
-         * 保存数据的方法，我们需要拿到保存数据的具体类型，然后根据类型调用不同的保存方法
+         * The method of saving data, we need to get the specific type of data to be saved,
+         * and then call different saving methods according to the type
          *
          * @param context
          * @param key
@@ -46,7 +46,9 @@ class WatchHistoryUtils {
         }
 
         /**
-         * 得到保存数据的方法，我们根据默认值得到保存的数据的具体类型，然后调用相对于的方法获取值
+         * Get the method to save the data,
+         * we get the specific type of the saved data according to the default value,
+         * and then call the relative method to get the value
          *
          * @param context
          * @param key
@@ -65,11 +67,10 @@ class WatchHistoryUtils {
                 is Long -> sp.getLong(key, defaultObject)
                 else -> null
             }
-
         }
 
         /**
-         * 移除某个key值已经对应的值
+         * Remove the value corresponding to a key value
          *
          * @param context
          * @param key
@@ -83,7 +84,7 @@ class WatchHistoryUtils {
         }
 
         /**
-         * 清除所有数据
+         * Clear all data
          *
          * @param context
          */
@@ -96,7 +97,7 @@ class WatchHistoryUtils {
         }
 
         /**
-         * 查询某个key是否已经存在
+         * Query whether a key already exists
          *
          * @param context
          * @param key
@@ -109,7 +110,7 @@ class WatchHistoryUtils {
         }
 
         /**
-         * 返回所有的键值对
+         * Return all key-value pairs
          *
          * @param context
          * @return
@@ -120,9 +121,8 @@ class WatchHistoryUtils {
             return sp.all
         }
 
-
         /**
-         * 创建一个解决SharedPreferencesCompat.apply方法的一个兼容类
+         * Create a compatible class that solves the SharedPreferencesCompat.apply method
          *
          * @author zhy
          */
@@ -130,7 +130,7 @@ class WatchHistoryUtils {
             private val sApplyMethod = findApplyMethod()
 
             /**
-             * 反射查找apply的方法
+             * Reflection find apply method
              *
              * @return
              */
@@ -145,7 +145,7 @@ class WatchHistoryUtils {
             }
 
             /**
-             * 如果找到则使用apply执行，否则使用commit
+             * If found, use apply to execute, otherwise use commit
              *
              * @param editor
              */
@@ -164,11 +164,12 @@ class WatchHistoryUtils {
             }
         }
 
-        /*****************文件名可变，用于存储各种历史记录********/
-
+        /***************** Variable file name, used to store various historical records ********/
 
         /**
-         * 保存数据的方法，我们需要拿到保存数据的具体类型，然后根据类型调用不同的保存方法
+         * The method of saving data,
+         * we need to get the specific type of data to be saved,
+         * and then call different saving methods according to the type
          *
          * @param context
          * @param key
@@ -193,7 +194,9 @@ class WatchHistoryUtils {
         }
 
         /**
-         * 得到保存数据的方法，我们根据默认值得到保存的数据的具体类型，然后调用相对于的方法获取值
+         * Get the method to save the data,
+         * we get the specific type of the saved data according to the default value,
+         * and then call the relative method to get the value
          *
          * @param context
          * @param key
@@ -212,11 +215,10 @@ class WatchHistoryUtils {
                 is Long -> sp.getLong(key, defaultObject)
                 else -> null
             }
-
         }
 
         /**
-         * 移除某个key值已经对应的值
+         * Remove the value corresponding to a key value
          *
          * @param context
          * @param key
@@ -230,7 +232,7 @@ class WatchHistoryUtils {
         }
 
         /**
-         * 清除所有数据
+         * Clear all data
          *
          * @param context
          */
@@ -243,7 +245,7 @@ class WatchHistoryUtils {
         }
 
         /**
-         * 查询某个key是否已经存在
+         * Query whether a key already exists
          *
          * @param context
          * @param key
@@ -256,7 +258,7 @@ class WatchHistoryUtils {
         }
 
         /**
-         * 返回所有的键值对
+         * Return all key-value pairs
          *
          * @param context
          * @return
@@ -266,7 +268,6 @@ class WatchHistoryUtils {
                     Context.MODE_PRIVATE)
             return sp.all
         }
-
 
         fun putObject(fileName: String,context: Context, `object`: Any?,
                       key: String): Boolean {
@@ -286,8 +287,8 @@ class WatchHistoryUtils {
                 return false
             }
 
-            // 将对象放到OutputStream中
-            // 将对象转换成byte数组，并将其进行base64编码
+            // Put the object in the OutputStream
+            // Convert the object into a byte array and base64 encode it
             val objectStr = String(Base64.encode(baos.toByteArray(),
                     Base64.DEFAULT))
             try {
@@ -303,7 +304,9 @@ class WatchHistoryUtils {
         }
 
         /**
-         * 得到保存数据的方法，我们根据默认值得到保存的数据的具体类型，然后调用相对于的方法获取值
+         * Get the method to save the data,
+         * we get the specific type of the saved data according to the default value,
+         * and then call the relative method to get the value
          *
          * @param context
          * @param key
@@ -314,15 +317,15 @@ class WatchHistoryUtils {
                     Context.MODE_PRIVATE)
             try {
                 val wordBase64 = sharePre.getString(key, "")
-                // 将base64格式字符串还原成byte数组
-                if (wordBase64 == null || wordBase64 == "") { // 不可少，否则在下面会报java.io.StreamCorruptedException
+                // Restore base64 format string to byte array
+                if (wordBase64 == null || wordBase64 == "") { // Indispensable, otherwise java.io.StreamCorruptedException will be reported below
                     return null
                 }
                 val objBytes = Base64.decode(wordBase64.toByteArray(),
                         Base64.DEFAULT)
                 val bais = ByteArrayInputStream(objBytes)
                 val ois = ObjectInputStream(bais)
-                // 将byte数组转换成product对象
+                // Convert byte array into product object
                 val obj = ois.readObject()
                 bais.close()
                 ois.close()
@@ -335,7 +338,7 @@ class WatchHistoryUtils {
         }
 
         /**
-         * 序列化对象
+         * Serialized object
 
          * @param person
          * *
@@ -357,7 +360,7 @@ class WatchHistoryUtils {
         }
 
         /**
-         * 反序列化对象
+         * Deserialize object
 
          * @param str
          * *
@@ -380,9 +383,5 @@ class WatchHistoryUtils {
             byteArrayInputStream.close()
             return obj
         }
-
-
     }
-
-
 }

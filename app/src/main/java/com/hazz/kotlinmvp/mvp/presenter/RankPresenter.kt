@@ -7,15 +7,14 @@ import com.hazz.kotlinmvp.net.exception.ExceptionHandle
 
 /**
  * Created by xuhao on 2017/11/30.
- * desc: 获取 TabInfo Presenter
+ * desc: Obtain TabInfo Presenter
  */
 class RankPresenter : BasePresenter<RankContract.View>(), RankContract.Presenter {
 
     private val rankModel by lazy { RankModel() }
 
-
     /**
-     *  请求排行榜数据
+     *  Request leader board data
      */
     override fun requestRankList(apiUrl: String) {
         checkViewAttached()
@@ -28,7 +27,7 @@ class RankPresenter : BasePresenter<RankContract.View>(), RankContract.Presenter
                     }
                 }, { throwable ->
                     mRootView?.apply {
-                        //处理异常
+                        // Handle exception
                         showError(ExceptionHandle.handleException(throwable),ExceptionHandle.errorCode)
                     }
                 })

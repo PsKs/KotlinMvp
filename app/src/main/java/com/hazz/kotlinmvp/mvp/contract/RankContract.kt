@@ -7,23 +7,22 @@ import com.hazz.kotlinmvp.mvp.model.bean.TabInfoBean
 
 /**
  * Created by xuhao on 2017/11/30.
- * desc: 契约类
+ * desc: Rank Contract
  */
 interface RankContract {
 
     interface View:IBaseView{
         /**
-         * 设置排行榜的数据
+         * Set leaderboard data
          */
         fun setRankList(itemList: ArrayList<HomeBean.Issue.Item>)
 
         fun showError(errorMsg:String,errorCode:Int)
     }
 
-
     interface Presenter:IPresenter<View>{
         /**
-         * 获取 TabInfo
+         * Get TabInfo
          */
         fun requestRankList(apiUrl:String)
     }

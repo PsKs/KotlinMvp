@@ -10,7 +10,6 @@ import java.net.NetworkInterface
 import java.net.SocketException
 import java.net.URL
 
-
 /**
  * Created by xuhao on 2017/11/13.
  */
@@ -18,11 +17,12 @@ class NetworkUtil{
 
     companion object {
 
-        var NET_CNNT_BAIDU_OK = 1 // NetworkAvailable
-        var NET_CNNT_BAIDU_TIMEOUT = 2 // no NetworkAvailable
-        var NET_NOT_PREPARE = 3 // Net no ready
-        var NET_ERROR = 4 //net error
-        private val TIMEOUT = 3000 // TIMEOUT
+        var NET_CNNT_BAIDU_OK = 1       // NetworkAvailable
+        var NET_CNNT_BAIDU_TIMEOUT = 2  // no NetworkAvailable
+        var NET_NOT_PREPARE = 3         // Net no ready
+        var NET_ERROR = 4               // net error
+        private val TIMEOUT = 3000      // TIMEOUT
+
         /**
          * check NetworkAvailable
          *
@@ -38,7 +38,7 @@ class NetworkUtil{
         }
 
         /**
-         * 得到ip地址
+         * Get ip address
          *
          * @return
          */
@@ -145,9 +145,5 @@ class NetworkUtil{
                     .activeNetworkInfo.state == NetworkInfo.State.CONNECTED || mgrTel
                     .networkType == TelephonyManager.NETWORK_TYPE_UMTS
         }
-
     }
-
-
-
 }

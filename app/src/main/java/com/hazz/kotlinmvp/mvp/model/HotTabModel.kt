@@ -8,17 +8,16 @@ import io.reactivex.Observable
 
 /**
  * Created by xuhao on 2017/11/30.
- * desc: 热门 Model
+ * desc: HotTab Model
  */
 class HotTabModel {
 
     /**
-     * 获取 TabInfo
+     * Obtain TabInfo
      */
     fun getTabInfo(): Observable<TabInfoBean> {
 
         return RetrofitManager.service.getRankList()
                 .compose(SchedulerUtils.ioToMain())
     }
-
 }

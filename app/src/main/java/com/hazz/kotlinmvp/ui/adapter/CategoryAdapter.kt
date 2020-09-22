@@ -19,13 +19,11 @@ import com.hazz.kotlinmvp.view.recyclerview.adapter.CommonAdapter
 
 /**
  * Created by xuhao on 2017/11/29.
- * desc: 分类的 Adapter
+ * desc: Category Adapter
  */
 
 class CategoryAdapter(mContext: Context, categoryList: ArrayList<CategoryBean>, layoutId: Int) :
         CommonAdapter<CategoryBean>(mContext, categoryList, layoutId) {
-
-
 
     private var textTypeface:Typeface?=null
 
@@ -33,7 +31,7 @@ class CategoryAdapter(mContext: Context, categoryList: ArrayList<CategoryBean>, 
         textTypeface = Typeface.createFromAsset(MyApplication.context.assets, "fonts/FZLanTingHeiS-DB1-GB-Regular.TTF")
     }
     /**
-     * 设置新数据
+     * Set new data
      */
     fun setData(categoryList: ArrayList<CategoryBean>){
         mData.clear()
@@ -41,11 +39,11 @@ class CategoryAdapter(mContext: Context, categoryList: ArrayList<CategoryBean>, 
         notifyDataSetChanged()
     }
     /**
-     * 绑定数据
+     * Bind data
      */
     override fun bindData(holder: ViewHolder, data: CategoryBean, position: Int) {
         holder.setText(R.id.tv_category_name, "#${data.name}")
-        //设置方正兰亭细黑简体
+        // Set Founder Lanting Fine Black Simplified
         holder.getView<TextView>(R.id.tv_category_name).typeface = textTypeface
 
         holder.setImagePath(R.id.iv_category, object : ViewHolder.HolderImageLoader(data.bgPicture) {

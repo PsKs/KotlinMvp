@@ -7,12 +7,12 @@ import io.reactivex.Observable
 
 /**
  * Created by xuhao on 2017/11/30.
- * desc: 搜索 Model
+ * desc: search for Model
  */
 class SearchModel {
 
     /**
-     * 请求热门关键词的数据
+     * Request data for popular keywords
      */
     fun requestHotWordData(): Observable<ArrayList<String>> {
 
@@ -20,9 +20,8 @@ class SearchModel {
                 .compose(SchedulerUtils.ioToMain())
     }
 
-
     /**
-     * 搜索关键词返回的结果
+     * Results returned by search keywords
      */
     fun getSearchResult(words: String):Observable<HomeBean.Issue>{
         return RetrofitManager.service.getSearchData(words)
@@ -30,11 +29,10 @@ class SearchModel {
     }
 
     /**
-     * 加载更多数据
+     * Load more data
      */
     fun loadMoreData(url: String): Observable<HomeBean.Issue> {
         return RetrofitManager.service.getIssueData(url)
                 .compose(SchedulerUtils.ioToMain())
     }
-
 }

@@ -12,7 +12,6 @@ import java.net.URL
 /**
  * Created by xuhao on 2017/11/14.
  */
-
 fun Fragment.showToast(content: String): Toast {
     val toast = Toast.makeText(this.activity?.applicationContext, content, Toast.LENGTH_SHORT)
     toast.show()
@@ -55,7 +54,7 @@ fun durationFormat(duration: Long?): String {
 }
 
 /**
- * 数据流量格式化
+ * Data flow formatting
  */
 fun Context.dataFormat(total: Long): String {
     var result: String
@@ -68,7 +67,3 @@ fun Context.dataFormat(total: Long): String {
     }
     return result
 }
-
-
-
-

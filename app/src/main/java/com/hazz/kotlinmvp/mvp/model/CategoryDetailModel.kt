@@ -8,12 +8,12 @@ import java.util.*
 
 /**
  * Created by xuhao on 2017/11/30.
- * desc: 分类详情的 Model
+ * desc: Model of classification details
  */
 class CategoryDetailModel {
 
     /**
-     * 获取分类下的 List 数据
+     * Get List data under category
      */
     fun getCategoryDetailList(id: Long): Observable<HomeBean.Issue> {
         return RetrofitManager.service.getCategoryDetailList(id)
@@ -21,7 +21,7 @@ class CategoryDetailModel {
     }
 
     /**
-     * 加载更多数据
+     * Load more data
      */
     fun loadMoreData(url: String): Observable<HomeBean.Issue> {
         return RetrofitManager.service.getIssueData(url)

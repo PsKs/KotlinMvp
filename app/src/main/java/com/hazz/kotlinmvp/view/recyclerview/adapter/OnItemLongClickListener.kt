@@ -2,10 +2,8 @@ package com.hazz.kotlinmvp.view.recyclerview.adapter
 
 /**
  *
- * Description: Adapter条目的长按事件
+ * Description: Long press event of Adapter item
  */
 interface OnItemLongClickListener {
-
     fun onItemLongClick(obj: Any?, position: Int): Boolean
-
 }

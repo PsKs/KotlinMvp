@@ -16,24 +16,22 @@ import android.view.WindowManager
 import java.util.regex.Pattern
 
 /**
- * 状态栏透明
+ * Transparent status bar
  */
-
 class StatusBarUtil {
-
 
     companion object {
         private var DEFAULT_COLOR = 0
-        private var DEFAULT_ALPHA = 0f//Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ? 0.2f : 0.3f;
+        private var DEFAULT_ALPHA = 0f //Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ? 0.2f : 0.3f;
         private val MIN_API = 19
 
-        /** 判断是否Flyme4以上  */
+        /** Determine if Flyme4 or above  */
         private val isFlyme4Later: Boolean
             get() = (Build.FINGERPRINT.contains("Flyme_OS_4")
                     || Build.VERSION.INCREMENTAL.contains("Flyme_OS_4")
                     || Pattern.compile("Flyme OS [4|5]", Pattern.CASE_INSENSITIVE).matcher(Build.DISPLAY).find())
 
-        /** 判断是否为MIUI6以上  */
+        /** Determine whether it is MIUI6 or above  */
         private val isMIUI6Later: Boolean
             get() {
                 return try {
@@ -91,7 +89,10 @@ class StatusBarUtil {
             }
         }
 
-        /** 设置状态栏darkMode,字体颜色及icon变黑(目前支持MIUI6以上,Flyme4以上,Android M以上)  */
+        /**
+         * Set the darkMode of the status bar, font color and icon turn black
+         * (currently support MIUI6 or above, Flyme4 or above, Android M or above)
+         */
         fun darkMode(activity: Activity) {
             darkMode(activity.window, DEFAULT_COLOR, DEFAULT_ALPHA)
         }
@@ -100,7 +101,10 @@ class StatusBarUtil {
             darkMode(activity.window, color, alpha)
         }
 
-        /** 设置状态栏darkMode,字体颜色及icon变黑(目前支持MIUI6以上,Flyme4以上,Android M以上)  */
+        /**
+         * Set the darkMode of the status bar, font color and icon turn black
+         * (currently support MIUI6 or above, Flyme4 or above, Android M or above)
+         */
         @TargetApi(Build.VERSION_CODES.M)
         fun darkMode(window: Window, color: Int, @FloatRange(from = 0.0, to = 1.0) alpha: Float) {
             when {
@@ -135,7 +139,7 @@ class StatusBarUtil {
 
         //------------------------->
 
-        /** android 6.0设置字体颜色  */
+        /** android 6.0 set font color  */
         @RequiresApi(Build.VERSION_CODES.M)
         fun darkModeForM(window: Window, dark: Boolean) {
             //        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -152,7 +156,7 @@ class StatusBarUtil {
         }
 
         /**
-         * 设置Flyme4+的darkMode,darkMode时候字体颜色及icon变黑
+         * Set the darkMode of Flyme4+, the font color and icon turn black when darkMode
          * http://open-wiki.flyme.cn/index.php?title=Flyme%E7%B3%BB%E7%BB%9FAPI
          */
         fun darkModeForFlyme4(window: Window?, dark: Boolean): Boolean {
@@ -185,7 +189,7 @@ class StatusBarUtil {
         }
 
         /**
-         * 设置MIUI6+的状态栏是否为darkMode,darkMode时候字体颜色及icon变黑
+         * Set whether the status bar of MIUI6+ is darkMode, the font color and icon turn black when darkMode
          * http://dev.xiaomi.com/doc/p=4769/
          */
         fun darkModeForMIUI6(window: Window, darkmode: Boolean): Boolean {
@@ -207,7 +211,7 @@ class StatusBarUtil {
         //</editor-fold>
 
 
-        /** 增加View的paddingTop,增加的值为状态栏高度  */
+        /** Increase the paddingTop of the View, and the increased value is the height of the status bar  */
         fun setPadding(context: Context, view: View) {
             if (Build.VERSION.SDK_INT >= MIN_API) {
                 view.setPadding(view.paddingLeft, view.paddingTop + getStatusBarHeight(context),
@@ -215,41 +219,48 @@ class StatusBarUtil {
             }
         }
 
-        /** 增加View的paddingTop,增加的值为状态栏高度 (智能判断，并设置高度) */
+        /**
+         * Increase the paddingTop of View, the increased value is the height of the status bar
+         * (intelligent judgment, and set the height)
+         */
         fun setPaddingSmart(context: Context, view: View) {
             if (Build.VERSION.SDK_INT >= MIN_API) {
                 val lp = view.layoutParams
                 if (lp != null && lp.height > 0) {
-                    lp.height += getStatusBarHeight(context)//增高
+                    lp.height += getStatusBarHeight(context) // Increase
                 }
                 view.setPadding(view.paddingLeft, view.paddingTop + getStatusBarHeight(context),
                         view.paddingRight, view.paddingBottom)
             }
         }
 
-        /** 增加View的高度以及paddingTop,增加的值为状态栏高度.一般是在沉浸式全屏给ToolBar用的  */
+        /**
+         * Increase the height of the View and paddingTop,
+         * the increased value is the height of the status bar.
+         * Generally used for ToolBar in immersive full screen
+         */
         fun setHeightAndPadding(context: Context, view: View) {
             if (Build.VERSION.SDK_INT >= MIN_API) {
                 val lp = view.layoutParams
-                lp.height += getStatusBarHeight(context)//增高
+                lp.height += getStatusBarHeight(context) // Increase
                 view.setPadding(view.paddingLeft, view.paddingTop + getStatusBarHeight(context),
                         view.paddingRight, view.paddingBottom)
             }
         }
 
-        /** 增加View上边距（MarginTop）一般是给高度为 WARP_CONTENT 的小控件用的 */
+        /** Increasing the top margin of the View (MarginTop) is generally used for small controls with a height of WARP_CONTENT */
         fun setMargin(context: Context, view: View) {
             if (Build.VERSION.SDK_INT >= MIN_API) {
                 val lp = view.layoutParams
                 if (lp is ViewGroup.MarginLayoutParams) {
-                    lp.topMargin += getStatusBarHeight(context)//增高
+                    lp.topMargin += getStatusBarHeight(context) // Increase
                 }
                 view.layoutParams = lp
             }
         }
 
         /**
-         * 创建假的透明栏
+         * Create fake transparent bar
          */
         fun setTranslucentView(container: ViewGroup, color: Int, @FloatRange(from = 0.0, to = 1.0) alpha: Float) {
             if (Build.VERSION.SDK_INT >= 19) {
@@ -273,7 +284,7 @@ class StatusBarUtil {
             return color and 0x00ffffff or ((a * alpha).toInt() shl 24)
         }
 
-        /** 获取状态栏高度  */
+        /** Get the height of the status bar  */
         fun getStatusBarHeight(context: Context): Int {
             var result = 24
             val resId = context.resources.getIdentifier("status_bar_height", "dimen", "android")
@@ -286,5 +297,4 @@ class StatusBarUtil {
             return result
         }
     }
-
 }

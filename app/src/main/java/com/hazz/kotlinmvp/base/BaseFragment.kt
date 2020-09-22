@@ -23,23 +23,21 @@ import pub.devrel.easypermissions.EasyPermissions
  abstract class BaseFragment: Fragment(),EasyPermissions.PermissionCallbacks{
 
     /**
-     * 视图是否加载完毕
+     * Is the view loaded
      */
     private var isViewPrepare = false
     /**
-     * 数据是否加载过了
+     * Has the data been loaded
      */
     private var hasLoadData = false
     /**
-     * 多种状态的 View 的切换
+     * Switching of views in multiple states
      */
     protected var mLayoutStatusView: MultipleStatusView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(getLayoutId(),null)
     }
-
-
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
@@ -53,7 +51,7 @@ import pub.devrel.easypermissions.EasyPermissions
         isViewPrepare = true
         initView()
         lazyLoadDataIfPrepared()
-        //多种状态切换的view 重试点击事件
+        // Views with multiple state switching retry click events
         mLayoutStatusView?.setOnClickListener(mRetryClickListener)
     }
 
@@ -68,20 +66,19 @@ import pub.devrel.easypermissions.EasyPermissions
         lazyLoad()
     }
 
-
     /**
-     * 加载布局
+     * Load layout
      */
     @LayoutRes
     abstract fun getLayoutId():Int
 
     /**
-     * 初始化 ViewI
+     * Initialize View
      */
     abstract fun initView()
 
     /**
-     * 懒加载
+     * Lazy loading
      */
     abstract fun lazyLoad()
 
@@ -90,14 +87,13 @@ import pub.devrel.easypermissions.EasyPermissions
         activity?.let { MyApplication.getRefWatcher(it)?.watch(activity) }
     }
 
-
     /**
-     * 重写要申请权限的Activity或者Fragment的onRequestPermissionsResult()方法，
-     * 在里面调用EasyPermissions.onRequestPermissionsResult()，实现回调。
+     * Rewrite the onRequestPermissionsResult() method of the Activity or Fragment that you want to apply for permissions,
+     * Call EasyPermissions.onRequestPermissionsResult() inside to implement the callback.
      *
-     * @param requestCode  权限请求的识别码
-     * @param permissions  申请的权限
-     * @param grantResults 授权结果
+     * @param requestCode  Identification code of permission request
+     * @param permissions  Requested permissions
+     * @param grantResults Authorization result
      */
     override fun onRequestPermissionsResult(requestCode: Int, @NonNull permissions: Array<String>, @NonNull grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -105,36 +101,36 @@ import pub.devrel.easypermissions.EasyPermissions
     }
 
     /**
-     * 当权限被成功申请的时候执行回调
+     * Execute callback when permission is successfully applied
      *
-     * @param requestCode 权限请求的识别码
-     * @param perms       申请的权限的名字
+     * @param requestCode Identification code of permission request
+     * @param perms       The name of the requested permission
      */
     override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
         Log.i("EasyPermissions", "获取成功的权限$perms")
     }
 
     /**
-     * 当权限申请失败的时候执行的回调
+     * Callback executed when permission application fails
      *
-     * @param requestCode 权限请求的识别码
-     * @param perms       申请的权限的名字
+     * @param requestCode Identification code of permission request
+     * @param perms       The name of the requested permission
      */
     override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {
-        //处理权限名字字符串
+        // Processing authority name string
         val sb = StringBuffer()
         for (str in perms) {
             sb.append(str)
             sb.append("\n")
         }
         sb.replace(sb.length - 2, sb.length, "")
-        //用户点击拒绝并不在询问时候调用
+        // The user clicks to reject and is not called when asked
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            Toast.makeText(activity, "已拒绝权限" + sb + "并不再询问", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "Permission denied" + sb + "And don't ask again", Toast.LENGTH_SHORT).show()
             AppSettingsDialog.Builder(this)
-                    .setRationale("此功能需要" + sb + "权限，否则无法正常使用，是否打开设置")
-                    .setPositiveButton("好")
-                    .setNegativeButton("不行")
+                    .setRationale("This feature requires" + sb + "Permission, otherwise it cannot be used normally, whether to open the settings")
+                    .setPositiveButton("OK")
+                    .setNegativeButton("NO")
                     .build()
                     .show()
         }

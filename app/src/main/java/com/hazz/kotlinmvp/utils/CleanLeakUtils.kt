@@ -11,13 +11,13 @@ import java.lang.reflect.Field
  * Created by xuhao on 2017/12/13.
  * desc:
  */
-
 object CleanLeakUtils {
 
     fun fixInputMethodManagerLeak(destContext: Context?) {
         if (destContext == null) {
             return
         }
+
         val inputMethodManager = destContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
         val viewArray = arrayOf("mCurRootView", "mServedView", "mNextServedView")
@@ -33,16 +33,18 @@ object CleanLeakUtils {
                 filedObject = filed.get(inputMethodManager)
                 if (filedObject != null && filedObject is View) {
                     val fileView = filedObject as View?
-                    if (fileView!!.context === destContext) { // 被InputMethodManager持有引用的context是想要目标销毁的
-                        filed.set(inputMethodManager, null) // 置空，破坏掉path to gc节点
+                    if (fileView!!.context === destContext) {   // The context referenced by the InputMethodManager is to be destroyed by the target
+                        filed.set(inputMethodManager, null)     // Leave it blank, destroy the path to gc node
                     } else {
-                        break// 不是想要目标销毁的，即为又进了另一层界面了，不要处理，避免影响原逻辑,也就不用继续for循环了
+                        break   // It is not that you want the target to be destroyed,
+                        // that is, it has entered another layer of interface, do not deal with it,
+                        // to avoid affecting the original logic,
+                        // and there is no need to continue the for loop
                     }
                 }
             } catch (t: Throwable) {
                 t.printStackTrace()
             }
-
         }
     }
 }

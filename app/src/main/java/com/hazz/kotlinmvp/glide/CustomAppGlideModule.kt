@@ -19,24 +19,23 @@ import java.io.InputStream
 class CustomAppGlideModule : AppGlideModule() {
 
     /**
-     * 通过GlideBuilder设置默认的结构(Engine,BitmapPool ,ArrayPool,MemoryCache等等).
+     * Set the default structure (Engine, BitmapPool, ArrayPool, MemoryCache, etc.) through GlideBuilder.
      *
      * @param context
      * @param builder
      */
     override fun applyOptions(context: Context, builder: GlideBuilder) {
 
-        //重新设置内存限制
+        //Reset memory limit
         builder.setMemoryCache(LruResourceCache(10 * 1024 * 1024))
 
     }
 
-
     /**
-     * 清单解析的开启
+     * Open list analysis
      *
      *
-     * 这里不开启，避免添加相同的modules两次
+     * Do not open here to avoid adding the same modules twice
      *
      * @return
      */
@@ -46,7 +45,7 @@ class CustomAppGlideModule : AppGlideModule() {
 
     /**
      *
-     * 为App注册一个自定义的String类型的BaseGlideUrlLoader
+     * Register a custom String BaseGlideUrlLoader for the App
      * @param context
      * @param glide
      * @param registry

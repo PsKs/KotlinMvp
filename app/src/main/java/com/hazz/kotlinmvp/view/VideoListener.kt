@@ -4,111 +4,111 @@ import com.shuyu.gsyvideoplayer.listener.StandardVideoAllCallBack
 
 /**
  * Created by xuhao on 2017/11/27.
- * desc: VideoAllCallBack 回调
+ * desc: VideoAllCallBack callback
  */
 interface VideoListener : StandardVideoAllCallBack {
 
-    //加载成功，objects[0]是title，object[1]是当前所处播放器（全屏或非全屏）
+    // The loading is successful, objects[0] is the title, and object[1] is the current player (full screen or non-full screen)
     override fun onPrepared(url: String, vararg objects: Any) {
 
     }
 
-    //点击了开始按键播放，objects[0]是title，object[1]是当前所处播放器（全屏或非全屏）
+    // Click the start button to play, objects[0] is the title, object[1] is the current player (full screen or non-full screen)
     override fun onClickStartIcon(url: String, vararg objects: Any) {
 
     }
 
-    //点击了错误状态下的开始按键，objects[0]是title，object[1]是当前所处播放器（全屏或非全屏）
+    // Click the start button in the wrong state, objects[0] is the title, object[1] is the current player (full screen or non-full screen)
     override fun onClickStartError(url: String, vararg objects: Any) {
 
     }
 
-    //点击了播放状态下的开始按键--->停止，objects[0]是title，object[1]是当前所处播放器（全屏或非全屏）
+    // Click the start button in the playback state --->Stop, objects[0] is the title, object[1] is the current player (full screen or non-full screen)
     override fun onClickStop(url: String, vararg objects: Any) {
 
     }
 
-    //点击了全屏播放状态下的开始按键--->停止，objects[0]是title，object[1]是当前所处播放器（全屏或非全屏）
+    // Click the start button in the full-screen playback state --->Stop, objects[0] is the title, object[1] is the current player (full screen or non-full screen)
     override fun onClickStopFullscreen(url: String, vararg objects: Any) {
 
     }
 
-    //点击了暂停状态下的开始按键--->播放，objects[0]是title，object[1]是当前所处播放器（全屏或非全屏）
+    // Click the start button in the paused state --->Play, objects[0] is the title, object[1] is the current player (full screen or non-full screen)
     override fun onClickResume(url: String, vararg objects: Any) {
 
     }
 
-    //点击了全屏暂停状态下的开始按键--->播放，objects[0]是title，object[1]是当前所处播放器（全屏或非全屏）
+    // Click the start button in the full-screen pause state--->play, objects[0] is title, object[1] is the current player (full screen or non-full screen)
     override fun onClickResumeFullscreen(url: String, vararg objects: Any) {
 
     }
 
-    //点击了空白弹出seekbar，objects[0]是title，object[1]是当前所处播放器（全屏或非全屏）
+    // Click on the blank and pop up the seekbar, objects[0] is the title, object[1] is the current player (full screen or non-full screen)
     override fun onClickSeekbar(url: String, vararg objects: Any) {
 
     }
 
-    //点击了全屏的seekbar，objects[0]是title，object[1]是当前所处播放器（全屏或非全屏）
+    // Click on the full-screen seekbar, objects[0] is the title, and object[1] is the current player (full screen or non-full screen)
     override fun onClickSeekbarFullscreen(url: String, vararg objects: Any) {
 
     }
 
-    //播放完了，objects[0]是title，object[1]是当前所处播放器（全屏或非全屏）
+    // After playing, objects[0] is the title, object[1] is the current player (full screen or non-full screen)
     override fun onAutoComplete(url: String, vararg objects: Any) {
 
     }
 
-    //进去全屏，objects[0]是title，object[1]是当前所处播放器（全屏或非全屏）
+    // Go to full screen, objects[0] is the title, object[1] is the current player (full screen or non-full screen)
     override fun onEnterFullscreen(url: String, vararg objects: Any) {
 
     }
 
-    //退出全屏，objects[0]是title，object[1]是当前所处播放器（全屏或非全屏）
+    // Exit full screen, objects[0] is the title, object[1] is the current player (full screen or non-full screen)
     override fun onQuitFullscreen(url: String, vararg objects: Any) {
 
     }
 
-    //进入小窗口，objects[0]是title，object[1]是当前所处播放器（全屏或非全屏）
+    // Enter the small window, objects[0] is the title, object[1] is the current player (full screen or non-full screen)
     override fun onQuitSmallWidget(url: String, vararg objects: Any) {
 
     }
 
-    //退出小窗口，objects[0]是title，object[1]是当前所处播放器（全屏或非全屏）
+    // Exit the small window, objects[0] is the title, object[1] is the current player (full screen or non-full screen)
     override fun onEnterSmallWidget(url: String, vararg objects: Any) {
 
     }
 
-    //触摸调整声音，objects[0]是title，object[1]是当前所处播放器（全屏或非全屏）
+    // Touch to adjust the sound, objects[0] is the title, object[1] is the current player (full screen or non-full screen)
     override fun onTouchScreenSeekVolume(url: String, vararg objects: Any) {
 
     }
 
-    //触摸调整进度，objects[0]是title，object[1]是当前所处播放器（全屏或非全屏）
+    // Touch to adjust the progress, objects[0] is the title, object[1] is the current player (full screen or non-full screen)
     override fun onTouchScreenSeekPosition(url: String, vararg objects: Any) {
 
     }
 
-    //触摸调整亮度，objects[0]是title，object[1]是当前所处播放器（全屏或非全屏）
+    // Touch to adjust the brightness, objects[0] is the title, object[1] is the current player (full screen or non-full screen)
     override fun onTouchScreenSeekLight(url: String, vararg objects: Any) {
 
     }
 
-    //播放错误，objects[0]是title，object[1]是当前所处播放器（全屏或非全屏）
+    // Play error, objects[0] is the title, object[1] is the current player (full screen or not full screen)
     override fun onPlayError(url: String, vararg objects: Any) {
 
     }
 
-    //点击了空白区域开始播放，objects[0]是title，object[1]是当前所处播放器（全屏或非全屏）
+    // Click the blank area to start playing, objects[0] is the title, object[1] is the current player (full screen or non-full screen)
     override fun onClickStartThumb(url: String, vararg objects: Any) {
 
     }
 
-    //点击了播放中的空白区域，objects[0]是title，object[1]是当前所处播放器（全屏或非全屏）
+    // Click on the blank area in the playback, objects[0] is the title, object[1] is the current player (full screen or non-full screen)
     override fun onClickBlank(url: String, vararg objects: Any) {
 
     }
 
-    //点击了全屏播放中的空白区域，objects[0]是title，object[1]是当前所处播放器（全屏或非全屏）
+    // Click on a blank area in full-screen playback, objects[0] is the title, object[1] is the current player (full screen or non-full screen)
     override fun onClickBlankFullscreen(url: String, vararg objects: Any) {
 
     }

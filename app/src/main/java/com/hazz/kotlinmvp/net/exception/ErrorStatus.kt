@@ -6,31 +6,31 @@ package com.hazz.kotlinmvp.net.exception
  */
 object ErrorStatus {
     /**
-     * 响应成功
+     * Successful response
      */
     @JvmField
     val SUCCESS = 0
 
     /**
-     * 未知错误
+     * unknown error
      */
     @JvmField
     val UNKNOWN_ERROR = 1002
 
     /**
-     * 服务器内部错误
+     * Server internal error
      */
     @JvmField
     val SERVER_ERROR = 1003
 
     /**
-     * 网络连接超时
+     * Network connection timed out
      */
     @JvmField
     val NETWORK_ERROR = 1004
 
     /**
-     * API解析异常（或者第三方数据结构更改）等其他异常
+     * API parsing exception (or third-party data structure change) and other exceptions
      */
     @JvmField
     val API_ERROR = 1005

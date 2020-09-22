@@ -38,19 +38,17 @@ import java.util.*
 @SuppressLint("SimpleDateFormat")
 /**
  * Created by xuhao on 2017/11/25.
- * desc: 视频详情
+ * desc: Video details
  */
 class VideoDetailActivity : BaseActivity(), VideoDetailContract.View {
-
 
     companion object {
         const val IMG_TRANSITION = "IMG_TRANSITION"
         const val TRANSITION = "TRANSITION"
     }
 
-
     /**
-     * 第一次调用的时候初始化
+     * Initialize on the first call
      */
     private val mPresenter by lazy { VideoDetailPresenter() }
 
@@ -58,9 +56,8 @@ class VideoDetailActivity : BaseActivity(), VideoDetailContract.View {
 
     private val mFormat by lazy { SimpleDateFormat("yyyyMMddHHmmss"); }
 
-
     /**
-     * Item 详细数据
+     * Item detailed data
      */
     private lateinit var itemData: HomeBean.Issue.Item
     private var orientationUtils: OrientationUtils? = null
@@ -70,7 +67,6 @@ class VideoDetailActivity : BaseActivity(), VideoDetailContract.View {
     private var isPlay: Boolean = false
     private var isPause: Boolean = false
 
-
     private var isTransition: Boolean = false
 
     private var transition: Transition? = null
@@ -79,51 +75,50 @@ class VideoDetailActivity : BaseActivity(), VideoDetailContract.View {
     override fun layoutId(): Int = R.layout.activity_video_detail
 
     /**
-     * 初始化 View
+     * Initialize View
      */
     override fun initView() {
 
         mPresenter.attachView(this)
-        //过渡动画
+        // Transition animation
         initTransition()
         initVideoViewConfig()
 
         mRecyclerView.layoutManager = LinearLayoutManager(this)
         mRecyclerView.adapter = mAdapter
 
-        //设置相关视频 Item 的点击事件
+        // Set the click event of the related video item
         mAdapter.setOnItemDetailClick { mPresenter.loadVideoInfo(it) }
 
-        //状态栏透明和间距处理
+        // Status bar transparency and spacing processing
         StatusBarUtil.immersive(this)
         StatusBarUtil.setPaddingSmart(this, mVideoView)
 
-        /***  下拉刷新  ***/
-        //内容跟随偏移
+        /***  Pull down to refresh  ***/
+        // Content follows offset
         mRefreshLayout.setEnableHeaderTranslationContent(true)
         mRefreshLayout.setOnRefreshListener {
             loadVideoInfo()
         }
         mMaterialHeader = mRefreshLayout.refreshHeader as MaterialHeader?
-        //打开下拉刷新区域块背景:
+        // Open the drop-down refresh area block background:
         mMaterialHeader?.setShowBezierWave(true)
-        //设置下拉刷新主题颜色
+        // Set drop-down refresh theme color
         mRefreshLayout.setPrimaryColorsId(R.color.color_light_black, R.color.color_title_bg)
     }
 
-
     /**
-     * 初始化 VideoView 的配置
+     * Initialize the configuration of VideoView
      */
     private fun initVideoViewConfig() {
-        //设置旋转
+        // Set rotation
         orientationUtils = OrientationUtils(this, mVideoView)
-        //是否旋转
+        // Whether to rotate
         mVideoView.isRotateViewAuto = false
-        //是否可以滑动调整
+        // Can slide adjustment
         mVideoView.setIsTouchWiget(true)
 
-        //增加封面
+        // Add cover
         val imageView = ImageView(this)
         imageView.scaleType = ImageView.ScaleType.CENTER_CROP
         GlideApp.with(this)
@@ -136,7 +131,7 @@ class VideoDetailActivity : BaseActivity(), VideoDetailContract.View {
 
             override fun onPrepared(url: String, vararg objects: Any) {
                 super.onPrepared(url, *objects)
-                //开始播放了才能旋转和全屏
+                // Start playing to rotate and full screen
                 orientationUtils?.isEnable = true
                 isPlay = true
             }
@@ -148,7 +143,7 @@ class VideoDetailActivity : BaseActivity(), VideoDetailContract.View {
 
             override fun onPlayError(url: String, vararg objects: Any) {
                 super.onPlayError(url, *objects)
-                showToast("播放失败")
+                showToast("Playback failed")
             }
 
             override fun onEnterFullscreen(url: String, vararg objects: Any) {
@@ -159,38 +154,34 @@ class VideoDetailActivity : BaseActivity(), VideoDetailContract.View {
             override fun onQuitFullscreen(url: String, vararg objects: Any) {
                 super.onQuitFullscreen(url, *objects)
                 Logger.d("***** onQuitFullscreen **** ")
-                //列表返回的样式判断
+                // List returned style judgment
                 orientationUtils?.backToProtVideo()
             }
         })
-        //设置返回按键功能
+        // Set the return button function
         mVideoView.backButton.setOnClickListener({ onBackPressed() })
-        //设置全屏按键功能
+        // Set the full screen key function
         mVideoView.fullscreenButton.setOnClickListener {
-            //直接横屏
+            // Direct horizontal screen
             orientationUtils?.resolveByClick()
-            //第一个true是否需要隐藏actionbar，第二个true是否需要隐藏statusbar
+            // Does the first true need to hide the actionbar, and if the second true needs to hide the status bar
             mVideoView.startWindowFullscreen(this, true, true)
         }
-        //锁屏事件
+        // Lock screen event
         mVideoView.setLockClickListener(object : LockClickListener {
             override fun onClick(view: View?, lock: Boolean) {
-                //配合下方的onConfigurationChanged
+                // Cooperate with onConfigurationChanged below
                 orientationUtils?.isEnable = !lock
             }
-
         })
     }
-
 
     override fun start() {
 
     }
 
-
-
     /**
-     * 初始化数据
+     * Initialization data
      */
     override fun initData() {
         itemData = intent.getSerializableExtra(Constants.BUNDLE_VIDEO_DATA) as HomeBean.Issue.Item
@@ -199,12 +190,12 @@ class VideoDetailActivity : BaseActivity(), VideoDetailContract.View {
         saveWatchVideoHistoryInfo(itemData)
     }
 
-
     /**
-     * 保存观看记录
+     * Save watch history
      */
     private fun saveWatchVideoHistoryInfo(watchItem: HomeBean.Issue.Item) {
-        //保存之前要先查询sp中是否有该value的记录，有则删除.这样保证搜索历史记录不会有重复条目
+        // Before saving, you must first check whether there is a record of the value in sp
+        // and delete it. This ensures that there will be no duplicate entries in the search history
         val historyMap = WatchHistoryUtils.getAll(Constants.FILE_WATCH_HISTORY_NAME,MyApplication.context) as Map<*, *>
         for ((key, _) in historyMap) {
             if (watchItem == WatchHistoryUtils.getObject(Constants.FILE_WATCH_HISTORY_NAME,MyApplication.context, key as String)) {
@@ -224,38 +215,36 @@ class VideoDetailActivity : BaseActivity(), VideoDetailContract.View {
     }
 
     /**
-     * 设置播放视频 URL
+     * Set playing video URL
      */
     override fun setVideo(url: String) {
         Logger.d("playUrl:$url")
         mVideoView.setUp(url, false, "")
-        //开始自动播放
+        // Start auto play
         mVideoView.startPlayLogic()
     }
 
     /**
-     * 设置视频信息
+     * Set video information
      */
     override fun setVideoInfo(itemInfo: HomeBean.Issue.Item) {
         itemData = itemInfo
         mAdapter.addData(itemInfo)
-        // 请求相关的最新等视频
+        // Request related latest videos
         mPresenter.requestRelatedVideo(itemInfo.data?.id?:0)
 
     }
 
-
     /**
-     * 设置相关的数据视频
+     * Set related data video
      */
     override fun setRecentRelatedVideo(itemList: ArrayList<HomeBean.Issue.Item>) {
         mAdapter.addData(itemList)
         this.itemList = itemList
     }
 
-
     /**
-     * 设置背景颜色
+     * Set background color
      */
     override fun setBackground(url: String) {
         GlideApp.with(this)
@@ -267,7 +256,7 @@ class VideoDetailActivity : BaseActivity(), VideoDetailContract.View {
     }
 
     /**
-     * 设置错误信息
+     * Set error message
      */
     override fun setErrorMsg(errorMsg: String) {
 
@@ -282,20 +271,20 @@ class VideoDetailActivity : BaseActivity(), VideoDetailContract.View {
     }
 
     /**
-     * 1.加载视频信息
+     * 1.Load video information
      */
     fun loadVideoInfo() {
         mPresenter.loadVideoInfo(itemData)
     }
 
     /**
-     * 监听返回键
+     * Monitor return key
      */
     override fun onBackPressed() {
         orientationUtils?.backToProtVideo()
         if (StandardGSYVideoPlayer.backFromWindowFull(this))
             return
-        //释放所有
+        // Release all
         mVideoView.setStandardVideoAllCallBack(null)
         GSYVideoPlayer.releaseAllVideos()
         if (isTransition && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) run {
@@ -368,6 +357,4 @@ class VideoDetailActivity : BaseActivity(), VideoDetailContract.View {
 
         })
     }
-
-
 }

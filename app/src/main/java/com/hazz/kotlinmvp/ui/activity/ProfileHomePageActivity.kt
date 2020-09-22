@@ -17,11 +17,10 @@ import java.util.*
 
 /**
  * Created by xuhao on 2017/12/6.
- * desc: 个人主页
+ * desc: Homepage
  */
 
 class ProfileHomePageActivity : BaseActivity() {
-
 
     private var mOffset = 0
     private var mScrollY = 0
@@ -34,7 +33,7 @@ class ProfileHomePageActivity : BaseActivity() {
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun initView() {
-        //状态栏透明和间距处理
+        // Status bar transparency and spacing processing
         StatusBarUtil.darkMode(this)
         StatusBarUtil.setPaddingSmart(this, toolbar)
 
@@ -69,11 +68,10 @@ class ProfileHomePageActivity : BaseActivity() {
         })
         buttonBarLayout.alpha = 0f
         toolbar.setBackgroundColor(0)
-         //返回
+         // return
         toolbar.setNavigationOnClickListener { finish() }
 
-
-        refreshLayout.setOnRefreshListener {  mWebView.loadUrl("https://xuhaoblog.com/KotlinMvp") }
+        refreshLayout.setOnRefreshListener {  mWebView.loadUrl("https://github.com/PsKs/KotlinMvp") }
         refreshLayout.autoRefresh()
 
         mWebView.settings.javaScriptEnabled = true
@@ -89,7 +87,6 @@ class ProfileHomePageActivity : BaseActivity() {
                 view.loadUrl(String.format(Locale.CHINA, "javascript:document.body.style.paddingTop='%fpx'; void 0", DensityUtil.px2dp(mWebView.paddingTop.toFloat())))
             }
         }
-
     }
 
     override fun start() {

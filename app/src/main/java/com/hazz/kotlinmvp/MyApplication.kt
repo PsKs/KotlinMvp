@@ -14,7 +14,6 @@ import com.squareup.leakcanary.RefWatcher
 import com.tencent.bugly.crashreport.CrashReport
 import kotlin.properties.Delegates
 
-
 /**
  * Created by xuhao on 2017/11/16.
  *
@@ -35,7 +34,6 @@ class MyApplication : Application(){
             val myApplication = context.applicationContext as MyApplication
             return myApplication.refWatcher
         }
-
     }
 
     override fun onCreate() {
@@ -45,8 +43,6 @@ class MyApplication : Application(){
         initConfig()
         DisplayManager.init(this)
         registerActivityLifecycleCallbacks(mActivityLifecycleCallbacks)
-
-
     }
 
     private fun setupLeakCanary(): RefWatcher {
@@ -55,17 +51,16 @@ class MyApplication : Application(){
         } else LeakCanary.install(this)
     }
 
-
     /**
-     * 初始化配置
+     * Initial configuration
      */
     private fun initConfig() {
 
         val formatStrategy = PrettyFormatStrategy.newBuilder()
-                .showThreadInfo(false)  // 隐藏线程信息 默认：显示
-                .methodCount(0)         // 决定打印多少行（每一行代表一个方法）默认：2
+                .showThreadInfo(false)  // Hide thread information Default: Show
+                .methodCount(0)         // Decide how many lines to print (each line represents a method) Default: 2
                 .methodOffset(7)        // (Optional) Hides internal method calls up to offset. Default 5
-                .tag("hao_zz")   // (Optional) Global tag for every log. Default PRETTY_LOGGER
+                .tag("pp_zz")          // (Optional) Global tag for every log. Default PRETTY_LOGGER
                 .build()
         Logger.addLogAdapter(object : AndroidLogAdapter(formatStrategy) {
             override fun isLoggable(priority: Int, tag: String?): Boolean {
@@ -104,6 +99,4 @@ class MyApplication : Application(){
             Log.d(TAG, "onDestroy: " + activity.componentName.className)
         }
     }
-
-
 }

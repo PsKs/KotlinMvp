@@ -11,68 +11,68 @@ import com.hazz.kotlinmvp.view.recyclerview.ViewHolder
 
 /**
  * Created by xuhao on 2017/11/22.
- * desc: 通用的 Adapter
+ * desc: (Common) Universal Adapter
  */
 
-abstract class CommonAdapter<T>(var mContext: Context, var mData: ArrayList<T>, //条目布局
+abstract class CommonAdapter<T>(var mContext: Context, var mData: ArrayList<T>, // Entry layout
                                 private var mLayoutId: Int) : RecyclerView.Adapter<ViewHolder>() {
     protected var mInflater: LayoutInflater? = null
     private var mTypeSupport: MultipleType<T>? = null
 
-    //使用接口回调点击事件
+    // Use interface to call back click events
     private var mItemClickListener: OnItemClickListener? = null
 
-    //使用接口回调点击事件
+    // Use interface to call back click events
     private var mItemLongClickListener: OnItemLongClickListener? = null
 
     init {
         mInflater = LayoutInflater.from(mContext)
     }
 
-    //需要多布局
+    // Need more layout
     constructor(context: Context, data: ArrayList<T>, typeSupport: MultipleType<T>) : this(context, data, -1) {
         this.mTypeSupport = typeSupport
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         if (mTypeSupport != null) {
-            //需要多布局
+            // Need more layout
             mLayoutId = viewType
         }
-        //创建view
+        // Create view
         val view = mInflater?.inflate(mLayoutId, parent, false)
         return ViewHolder(view!!)
     }
 
     override fun getItemViewType(position: Int): Int {
-        //多布局问题
+        // Multiple layout issues
         return mTypeSupport?.getLayoutId(mData[position], position) ?: super.getItemViewType(position)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        //绑定数据
+        // Bind data
         bindData(holder, mData[position], position)
 
 //        if (mItemClickListener != null) {
 //            holder.itemView.setOnClickListener { mItemClickListener!!.onItemClick(mData[position], position) }
 //        }
-//        //长按点击事件
+//        // Long press click event
 //        if (mItemLongClickListener != null) {
 //            holder.itemView.setOnLongClickListener { mItemLongClickListener!!.onItemLongClick(mData[position], position) }
 //        }
-        //条目点击事件
+        // Item click event
         mItemClickListener?.let {
             holder.itemView.setOnClickListener { mItemClickListener!!.onItemClick(mData[position], position) }
         }
 
-        //长按点击事件
+        //Long press click event
         mItemLongClickListener?.let {
             holder.itemView.setOnLongClickListener { mItemLongClickListener!!.onItemLongClick(mData[position], position) }
         }
     }
 
     /**
-     * 将必要参数传递出去
+     * Pass the necessary parameters
      *
      * @param holder
      * @param data

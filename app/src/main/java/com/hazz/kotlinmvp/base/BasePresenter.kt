@@ -3,8 +3,6 @@ package com.hazz.kotlinmvp.base
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-
-
 /**
  * Created by xuhao on 2017/11/16.
  *
@@ -24,11 +22,10 @@ open class BasePresenter<T : IBaseView> : IPresenter<T> {
     override fun detachView() {
         mRootView = null
 
-         //保证activity结束时取消所有正在执行的订阅
+         // Ensure that all ongoing subscriptions are cancelled when the activity ends
         if (!compositeDisposable.isDisposed) {
             compositeDisposable.clear()
         }
-
     }
 
     private val isViewAttached: Boolean
@@ -43,6 +40,4 @@ open class BasePresenter<T : IBaseView> : IPresenter<T> {
     }
 
     private class MvpViewNotAttachedException internal constructor() : RuntimeException("Please call IPresenter.attachView(IBaseView) before" + " requesting data to the IPresenter")
-
-
 }

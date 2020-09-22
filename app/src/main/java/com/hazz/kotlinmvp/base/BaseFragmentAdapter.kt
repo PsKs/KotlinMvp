@@ -5,13 +5,12 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 
-
 /**
  * Created by xuhao on 2017/11/30.
- * 该类内的每一个生成的 Fragment 都将保存在内存之中，
- * 因此适用于那些相对静态的页，数量也比较少的那种；
- * 如果需要处理有很多页，并且数据动态性较大、占用内存较多的情况，
- * 应该使用FragmentStatePagerAdapter。
+ * Each generated Fragment in this class will be stored in memory
+ * Therefore, it is suitable for those relatively static pages, and the kind with a relatively small number;
+ * If you need to deal with a situation where there are many pages, and the data is dynamic and takes up more memory,
+ * FragmentStatePagerAdapter should be used.
  */
 class BaseFragmentAdapter : FragmentPagerAdapter {
 
@@ -27,7 +26,7 @@ class BaseFragmentAdapter : FragmentPagerAdapter {
         setFragments(fm, fragmentList, mTitles)
     }
 
-    //刷新fragment
+    //Refresh fragment
     @SuppressLint("CommitTransaction")
     private fun setFragments(fm: FragmentManager, fragments: List<Fragment>, mTitles: List<String>) {
         this.mTitles = mTitles

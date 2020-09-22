@@ -7,12 +7,11 @@ import com.hazz.kotlinmvp.net.exception.ExceptionHandle
 
 /**
  * Created by xuhao on 2017/11/30.
- * desc: 获取 TabInfo Presenter
+ * desc: Obtain TabInfo Presenter
  */
 class HotTabPresenter:BasePresenter<HotTabContract.View>(),HotTabContract.Presenter {
 
     private val hotTabModel by lazy { HotTabModel() }
-
 
     override fun getTabInfo() {
         checkViewAttached()
@@ -21,9 +20,10 @@ class HotTabPresenter:BasePresenter<HotTabContract.View>(),HotTabContract.Presen
                 .subscribe({
                     tabInfo->
                     mRootView?.setTabInfo(tabInfo)
-                },{
+                },
+                {
                     throwable->
-                    //处理异常
+                    // Handle exception
                     mRootView?.showError(ExceptionHandle.handleException(throwable), ExceptionHandle.errorCode)
                 })
         addSubscription(disposable)

@@ -33,8 +33,6 @@ abstract class BaseActivity : AppCompatActivity(),EasyPermissions.PermissionCall
         initView()
         start()
         initListener()
-
-
     }
 
     private fun initListener() {

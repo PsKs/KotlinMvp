@@ -10,7 +10,6 @@ import android.util.DisplayMetrics
 
 object DisplayManager {
     init {
-
     }
 
     private var displayMetrics: DisplayMetrics? = null
@@ -28,11 +27,9 @@ object DisplayManager {
         screenDpi = displayMetrics?.densityDpi
     }
 
-
-    //UI图的大小
+    // UI image size
     private const val STANDARD_WIDTH = 1080
     private const val STANDARD_HEIGHT = 1920
-
 
     fun getScreenWidth(): Int? {
         return screenWidth
@@ -44,7 +41,7 @@ object DisplayManager {
 
 
     /**
-     * 传入UI图中问题的高度，单位像素
+     * The height of the problem in the incoming UI map, in pixels
      * @param size
      * @return
      */
@@ -53,21 +50,21 @@ object DisplayManager {
     }
 
     /**
-     * 输入UI图的尺寸，输出实际的px
+     * Enter the size of the UI image and output the actual px
      *
-     * @param px ui图中的大小
+     * @param px size in ui diagram
      * @return
      */
     fun getRealWidth(px: Int): Int? {
-        //ui图的宽度
+        // ui image width
         return getRealWidth(px, STANDARD_WIDTH.toFloat())
     }
 
     /**
-     * 输入UI图的尺寸，输出实际的px,第二个参数是父布局
+     * Enter the size of the UI image, output the actual px, the second parameter is the parent layout
      *
-     * @param px          ui图中的大小
-     * @param parentWidth 父view在ui图中的高度
+     * @param px          size in ui diagram
+     * @param parentWidth The width of the parent view in the ui map
      * @return
      */
     fun getRealWidth(px: Int, parentWidth: Float): Int? {
@@ -75,21 +72,21 @@ object DisplayManager {
     }
 
     /**
-     * 输入UI图的尺寸，输出实际的px
+     * Enter the size of the UI image and output the actual px
      *
-     * @param px ui图中的大小
+     * @param px size in ui diagram
      * @return
      */
     fun getRealHeight(px: Int): Int? {
-        //ui图的宽度
+        // ui image width
         return getRealHeight(px, STANDARD_HEIGHT.toFloat())
     }
 
     /**
-     * 输入UI图的尺寸，输出实际的px,第二个参数是父布局
+     * Enter the size of the UI image, output the actual px, the second parameter is the parent layout
      *
-     * @param px           ui图中的大小
-     * @param parentHeight 父view在ui图中的高度
+     * @param px           size in ui diagram
+     * @param parentHeight The height of the parent view in the ui map
      * @return
      */
     fun getRealHeight(px: Int, parentHeight: Float): Int? {
@@ -97,7 +94,7 @@ object DisplayManager {
     }
 
     /**
-     * dip转px
+     * dip to px
      * @param dipValue
      * @return int
      */

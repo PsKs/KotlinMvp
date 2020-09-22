@@ -22,41 +22,37 @@ import io.reactivex.Observable
 
 /**
  * Created by xuhao on 2017/11/23.
- * desc: 首页精选的 Adapter
+ * desc: Home Featured Adapter
  */
-
 class HomeAdapter(context: Context, data: ArrayList<HomeBean.Issue.Item>)
     : CommonAdapter<HomeBean.Issue.Item>(context, data, -1) {
 
-
-    // banner 作为 RecyclerView 的第一项
+    // banner as the first item of RecyclerView
     var bannerItemSize = 0
 
     companion object {
-
-        private const val ITEM_TYPE_BANNER = 1    //Banner 类型
-        private const val ITEM_TYPE_TEXT_HEADER = 2   //textHeader
-        private const val ITEM_TYPE_CONTENT = 3    //item
+        private const val ITEM_TYPE_BANNER = 1          // Banner type
+        private const val ITEM_TYPE_TEXT_HEADER = 2     // textHeader
+        private const val ITEM_TYPE_CONTENT = 3         // item
     }
 
     /**
-     * 设置 Banner 大小
+     * Set Banner size
      */
     fun setBannerSize(count: Int) {
         bannerItemSize = count
     }
 
     /**
-     * 添加更多数据
+     * Add more data
      */
     fun addItemData(itemList: ArrayList<HomeBean.Issue.Item>) {
         this.mData.addAll(itemList)
         notifyDataSetChanged()
     }
 
-
     /**
-     * 得到 Item 的类型
+     * Get the type of Item
      */
     override fun getItemViewType(position: Int): Int {
         return when {
@@ -69,9 +65,8 @@ class HomeAdapter(context: Context, data: ArrayList<HomeBean.Issue.Item>)
         }
     }
 
-
     /**
-     *  得到 RecyclerView Item 数量（Banner 作为一个 item）
+     *  Get the number of RecyclerView Item (Banner as an item)
      */
     override fun getItemCount(): Int {
         return when {
@@ -81,25 +76,24 @@ class HomeAdapter(context: Context, data: ArrayList<HomeBean.Issue.Item>)
         }
     }
 
-
     /**
-     * 绑定布局
+     * Binding layout
      */
     override fun bindData(holder: ViewHolder, data: HomeBean.Issue.Item, position: Int) {
         when (getItemViewType(position)) {
-            //Banner
+            // Banner
             ITEM_TYPE_BANNER -> {
                 val bannerItemData: ArrayList<HomeBean.Issue.Item> = mData.take(bannerItemSize).toCollection(ArrayList())
                 val bannerFeedList = ArrayList<String>()
                 val bannerTitleList = ArrayList<String>()
-                //取出banner 显示的 img 和 Title
+                // Take out the img and Title displayed on the banner
                 Observable.fromIterable(bannerItemData)
                         .subscribe { list ->
                             bannerFeedList.add(list.data?.cover?.feed ?: "")
                             bannerTitleList.add(list.data?.title ?: "")
                         }
 
-                //设置 banner
+                // Set banner
                 with(holder) {
                     getView<BGABanner>(R.id.banner).run {
                         setAutoPlayAble(bannerFeedList.size > 1)
@@ -110,36 +104,30 @@ class HomeAdapter(context: Context, data: ArrayList<HomeBean.Issue.Item>)
                                     .transition(DrawableTransitionOptions().crossFade())
                                     .placeholder(R.drawable.placeholder_banner)
                                     .into(banner.getItemImageView(position))
-
-
                         }
-
                     }
                 }
-                //没有使用到的参数在 kotlin 中用"_"代替
+                // Unused parameters are replaced by "_" in kotlin
                 holder.getView<BGABanner>(R.id.banner).setDelegate { _, imageView, _, i ->
 
                     goToVideoPlayer(mContext as Activity, imageView, bannerItemData[i])
 
                 }
             }
-            //TextHeader
+            // TextHeader
             ITEM_TYPE_TEXT_HEADER -> {
                 holder.setText(R.id.tvHeader, mData[position + bannerItemSize - 1].data?.text ?: "")
             }
 
-            //content
+            // content
             ITEM_TYPE_CONTENT -> {
                 setVideoItem(holder, mData[position + bannerItemSize - 1])
             }
-
-
         }
-
     }
 
     /**
-     *  创建布局
+     *  Create layout
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when (viewType) {
@@ -152,47 +140,44 @@ class HomeAdapter(context: Context, data: ArrayList<HomeBean.Issue.Item>)
         }
     }
 
-
     /**
-     * 加载布局
+     * Load layout
      */
     private fun inflaterView(mLayoutId: Int, parent: ViewGroup): View {
-        //创建view
+        // Create view
         val view = mInflater?.inflate(mLayoutId, parent, false)
         return view ?: View(parent.context)
     }
 
-
     /**
-     * 加载 content item
+     * Load content item
      */
     private fun setVideoItem(holder: ViewHolder, item: HomeBean.Issue.Item) {
         val itemData = item.data
-
         val defAvatar = R.mipmap.default_avatar
         val cover = itemData?.cover?.feed
+
         var avatar = itemData?.author?.icon
         var tagText: String? = "#"
 
-        // 作者出处为空，就显获取提供者的信息
+        // If the source of the author is empty, the information of the provider is obviously obtained
         if (avatar.isNullOrEmpty()) {
             avatar = itemData?.provider?.icon
         }
-        // 加载封页图
+        // Load cover page image
         GlideApp.with(mContext)
                 .load(cover)
                 .placeholder(R.drawable.placeholder_banner)
                 .transition(DrawableTransitionOptions().crossFade())
                 .into(holder.getView(R.id.iv_cover_feed))
 
-        // 如果提供者信息为空，就显示默认
+        // If the provider information is empty, the default
         if (avatar.isNullOrEmpty()) {
             GlideApp.with(mContext)
                     .load(defAvatar)
                     .placeholder(R.mipmap.default_avatar).circleCrop()
                     .transition(DrawableTransitionOptions().crossFade())
                     .into(holder.getView(R.id.iv_avatar))
-
         } else {
             GlideApp.with(mContext)
                     .load(avatar)
@@ -202,11 +187,11 @@ class HomeAdapter(context: Context, data: ArrayList<HomeBean.Issue.Item>)
         }
         holder.setText(R.id.tv_title, itemData?.title ?: "")
 
-        //遍历标签
+        // Iterate over tags
         itemData?.tags?.take(4)?.forEach {
             tagText += (it.name + "/")
         }
-        // 格式化时间
+        // Format time
         val timeFormat = durationFormat(itemData?.duration)
 
         tagText += timeFormat
@@ -218,12 +203,10 @@ class HomeAdapter(context: Context, data: ArrayList<HomeBean.Issue.Item>)
         holder.setOnItemClickListener(listener = View.OnClickListener {
             goToVideoPlayer(mContext as Activity, holder.getView(R.id.iv_cover_feed), item)
         })
-
-
     }
 
     /**
-     * 跳转到视频详情页面播放
+     * Jump to the video details page to play
      *
      * @param activity
      * @param view
@@ -242,6 +225,4 @@ class HomeAdapter(context: Context, data: ArrayList<HomeBean.Issue.Item>)
             activity.overridePendingTransition(R.anim.anim_in, R.anim.anim_out)
         }
     }
-
-
 }

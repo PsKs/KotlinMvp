@@ -2,6 +2,8 @@ package com.hazz.kotlinmvp.ui.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
+import com.hazz.kotlinmvp.MyApplication
 import com.hazz.kotlinmvp.R
 import com.hazz.kotlinmvp.base.BaseFragment
 import com.hazz.kotlinmvp.base.BaseFragmentAdapter
@@ -15,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_hot.*
 
 /**
  * Created by xuhao on 2017/11/9.
- * 热门
+ * Hot Fragment
  */
 class HotFragment : BaseFragment(), HotTabContract.View {
 
@@ -24,7 +26,7 @@ class HotFragment : BaseFragment(), HotTabContract.View {
     private var mTitle: String? = null
 
     /**
-     * 存放 tab 标题
+     * Store tab title
      */
     private val mTabTitleList = ArrayList<String>()
 
@@ -44,33 +46,28 @@ class HotFragment : BaseFragment(), HotTabContract.View {
         mPresenter.attachView(this)
     }
 
-
     override fun getLayoutId(): Int = R.layout.fragment_hot
-
 
     override fun lazyLoad() {
         mPresenter.getTabInfo()
     }
 
     override fun initView() {
-
         mLayoutStatusView = multipleStatusView
-        //状态栏透明和间距处理
+        // Status bar transparency and spacing processing
         activity?.let { StatusBarUtil.darkMode(it) }
         activity?.let { StatusBarUtil.setPaddingSmart(it, toolbar) }
     }
-
 
     override fun showLoading() {
       multipleStatusView.showLoading()
     }
 
     override fun dismissLoading() {
-
     }
 
     /**
-     * 设置 TabInfo
+     * Set TabInfo
      */
     override fun setTabInfo(tabInfoBean: TabInfoBean) {
         multipleStatusView.showContent()
@@ -80,7 +77,7 @@ class HotFragment : BaseFragment(), HotTabContract.View {
 
         mViewPager.adapter = BaseFragmentAdapter(childFragmentManager,mFragmentList,mTabTitleList)
         mTabLayout.setupWithViewPager(mViewPager)
-
+        Log.i("HotFragment", "setTabInfo: "+mTabTitleList.toString())
     }
 
     override fun showError(errorMsg: String,errorCode:Int) {
@@ -96,5 +93,4 @@ class HotFragment : BaseFragment(), HotTabContract.View {
         super.onDestroy()
         mPresenter.detachView()
     }
-
 }

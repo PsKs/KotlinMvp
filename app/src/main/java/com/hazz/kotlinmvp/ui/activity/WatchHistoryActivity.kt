@@ -18,7 +18,7 @@ import kotlin.collections.ArrayList
 
 /**
  * Created by xuhao on 2017/12/11.
- * desc: 观看记录
+ * desc: Watch History
  */
 
 class WatchHistoryActivity : BaseActivity() {
@@ -38,7 +38,7 @@ class WatchHistoryActivity : BaseActivity() {
     }
 
     override fun initView() {
-        //返回
+        // return
         toolbar.setNavigationOnClickListener { finish() }
 
         val mAdapter = WatchHistoryAdapter(this, itemListData, R.layout.item_video_small_card)
@@ -51,7 +51,7 @@ class WatchHistoryActivity : BaseActivity() {
             multipleStatusView.showEmpty()
         }
 
-        //状态栏透明和间距处理
+        // Status bar transparency and spacing processing
         StatusBarUtil.darkMode(this)
         StatusBarUtil.setPaddingSmart(this, toolbar)
         StatusBarUtil.setPaddingSmart(this, mRecyclerView)
@@ -63,18 +63,19 @@ class WatchHistoryActivity : BaseActivity() {
     }
 
     /**
-     * 查询观看的历史记录
+     * Query viewing history
      */
     private fun queryWatchHistory(): ArrayList<HomeBean.Issue.Item> {
         val watchList = ArrayList<HomeBean.Issue.Item>()
         val hisAll = WatchHistoryUtils.getAll(Constants.FILE_WATCH_HISTORY_NAME, MyApplication.context) as Map<*, *>
-        //将key排序升序
+        // Sort keys in ascending order
         val keys = hisAll.keys.toTypedArray()
         Arrays.sort(keys)
         val keyLength = keys.size
-        //这里计算 如果历史记录条数是大于 可以显示的最大条数，则用最大条数做循环条件，防止历史记录条数-最大条数为负值，数组越界
+        // Calculate here. If the number of historical records is greater than the maximum number that can be displayed,
+        // the maximum number is used as the loop condition to prevent the number of historical records-the maximum number is negative and the array is out of bounds
         val hisLength = if (keyLength > HISTORY_MAX) HISTORY_MAX else keyLength
-        // 反序列化和遍历 添加观看的历史记录
+        // Deserialization and traversal add viewing history
         (1..hisLength).mapTo(watchList) {
             WatchHistoryUtils.getObject(Constants.FILE_WATCH_HISTORY_NAME, MyApplication.context,
                     keys[keyLength - it] as String) as HomeBean.Issue.Item
@@ -82,5 +83,4 @@ class WatchHistoryActivity : BaseActivity() {
         
         return watchList
     }
-
 }

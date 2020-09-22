@@ -2,18 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hazz.kotlinmvp">
 
-    <!-- 获取GSM网络信息状态，如当前的网络连接是否有效 -->
+    <!-- Get GSM network information status, such as whether the current network connection is valid -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- 允许访问Wi-Fi网络状态信息 -->
+    <!-- Allow access to Wi-Fi network status information -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!-- 允许获取Wi-Fi网络状态改变信息 -->
+    <!-- Allow access to Wi-Fi network status change information -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <!-- 访问网络 -->
+    <!-- Access network -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <!-- 读取手机状态 -->
+    <!-- Read phone status -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
-    <!-- SD 卡读写权限 -->
+    <!-- SD card read and write permissions -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -27,7 +27,6 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme.NoActionBar">
 
-
         <activity
             android:name=".ui.activity.SplashActivity"
             android:screenOrientation="portrait"
@@ -39,40 +38,40 @@
             </intent-filter>
         </activity>
 
-        <!-- 主页面 -->
+        <!-- home page -->
         <activity
             android:name=".ui.activity.MainActivity"
             android:screenOrientation="portrait" />
 
-        <!-- 视频播放详情页面 -->
+        <!-- Video playback details page -->
         <activity
             android:name=".ui.activity.VideoDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
 
-        <!-- 分类详情 -->
+        <!-- Classification details -->
         <activity
             android:name=".ui.activity.CategoryDetailActivity"
             android:screenOrientation="portrait" />
 
-        <!-- 搜索页面 -->
+        <!-- Search page -->
         <activity
             android:name=".ui.activity.SearchActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
 
-        <!-- 个人主页 -->
+        <!-- Homepage -->
         <activity
             android:name=".ui.activity.ProfileHomePageActivity"
             android:screenOrientation="portrait" />
 
-        <!-- 关于 -->
+        <!-- About-->
         <activity
             android:name=".ui.activity.AboutActivity"
             android:screenOrientation="portrait" />
-        <!-- 观看记录 -->
+
+        <!-- Watch History -->
         <activity android:name=".ui.activity.WatchHistoryActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
     </application>
 

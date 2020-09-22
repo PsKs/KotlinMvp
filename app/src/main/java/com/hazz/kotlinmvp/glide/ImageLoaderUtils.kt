@@ -8,7 +8,4 @@ object ImageLoaderUtils{
     init {
 
     }
-
-
-
 }

@@ -11,9 +11,8 @@ import com.hazz.kotlinmvp.R
 @Suppress("IMPLICIT_CAST_TO_ANY")
 /**
  * Created by xuhao on 2017/12/4.
- * desc: 圆角的 ImageView
+ * desc: ImageView with rounded corners
  */
-
 class CircleImageView(context: Context, attrs: AttributeSet) : android.support.v7.widget.AppCompatImageView(context, attrs) {
 
     private val mType: Int
@@ -32,7 +31,7 @@ class CircleImageView(context: Context, attrs: AttributeSet) : android.support.v
     private val mMatrix = Matrix()
 
     init {
-        //取xml文件中设定的参数
+        // Take the parameters set in the xml file
         val ta = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView)
         mType = ta.getInt(R.styleable.CircleImageView_type, DEFAULT_TYPE)
         mBorderColor = ta.getColor(R.styleable.CircleImageView_borderColor, DEFAULT_BORDER_COLOR)
@@ -114,11 +113,11 @@ class CircleImageView(context: Context, attrs: AttributeSet) : android.support.v
          */
         val TYPE_NONE = 0
         /**
-         * 圆形
+         * Round
          */
         val TYPE_CIRCLE = 1
         /**
-         * 圆角矩形
+         * Rounded Rectangle
          */
         val TYPE_ROUNDED_RECT = 2
 

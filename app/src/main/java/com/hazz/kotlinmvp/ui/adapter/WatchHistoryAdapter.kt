@@ -27,8 +27,7 @@ import com.hazz.kotlinmvp.view.recyclerview.adapter.CommonAdapter
 class WatchHistoryAdapter(context: Context, dataList: ArrayList<HomeBean.Issue.Item>, layoutId: Int)
     : CommonAdapter<HomeBean.Issue.Item>(context, dataList, layoutId) {
 
-
-    //绑定数据
+    // Bind data
     override fun bindData(holder: ViewHolder, data: HomeBean.Issue.Item, position: Int) {
         with(holder) {
             setText(R.id.tv_title, data.data?.title!!)
@@ -49,9 +48,8 @@ class WatchHistoryAdapter(context: Context, dataList: ArrayList<HomeBean.Issue.I
         })
     }
 
-
     /**
-     * 跳转到视频详情页面播放
+     * Jump to the video details page to play
      *
      * @param activity
      * @param view

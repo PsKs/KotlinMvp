@@ -18,9 +18,8 @@ import java.lang.ref.WeakReference;
 
 /**
  * Created by xuhao on 2017/12/4.
- * desc:LoadingView 加载动画
+ * desc: LoadingView loading animation
  */
-
 public class LoadingView extends View {
 
     private int mOuterCircleRadius;
@@ -45,10 +44,8 @@ public class LoadingView extends View {
     private PointF mRotateCenter;
     private MyHandler mHandler;
 
-
     public LoadingView(Context context) {
         this(context, null);
-
     }
 
     public LoadingView(Context context, AttributeSet attrs) {
@@ -72,17 +69,17 @@ public class LoadingView extends View {
     }
 
     private void init() {
-        //设置画进度圈的画笔
+        // Set the brush for drawing the progress circle
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setColor(mOuterCircleColor);
         mPaint.setStrokeWidth(mStrokeWidth);
         mPaint.setStyle(Paint.Style.STROKE);
 
-        //设置画三角形的画笔
+        // Set the brush for drawing triangles
         mTrianglePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTrianglePaint.setColor(mInnerTriangleColor);
 
-        //设置画背景的画笔
+        // Set the brush for painting the background
         mBackGroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mBackGroundPaint.setColor(mBackgroundColor);
 
@@ -92,11 +89,10 @@ public class LoadingView extends View {
         mHandler = new MyHandler(this);
     }
 
-
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        //判断外圆的半径
+        // Determine the radius of the outer circle
         mOuterCircleRadius = (int) (Math.min(mOuterCircleRadius,
                 (Math.min(w - getPaddingRight() - getPaddingLeft(), h - getPaddingTop() - getPaddingBottom()) - 4 * mPaint.getStrokeWidth()) / 2));
         if (mOuterCircleRadius < 0) {
@@ -108,15 +104,17 @@ public class LoadingView extends View {
         float diameter = 2 * mOuterCircleRadius;
         mRectF = new RectF(left, top, left + diameter, top + diameter);
 
-        //判断内圆的半径大小
+        // Determine the radius of the inner circle
         mInnerTriangleRadius = (mInnerTriangleRadius < mOuterCircleRadius) ? mInnerTriangleRadius : 3 * mOuterCircleRadius / 5;
         if (mInnerTriangleRadius < 0) {
             mInnerTriangleRadius = 0;
         }
-        //计算内圆的圆心，圆心应该和外圆圆心相同
+
+        // Calculate the center of the inner circle,
+        // the center of the circle should be the same as the center of the outer circle
         float centerX = left + mOuterCircleRadius;
         float centerY = top + mOuterCircleRadius;
-        //计算内圆的内接三角形的三个定点组成的path
+        // Calculate the path composed of three fixed points of the triangle inscribed in the inner circle
         mPath.moveTo(centerX - mInnerTriangleRadius / 2, (float) (centerY - Math.sqrt(3) * mInnerTriangleRadius / 2));
         mPath.lineTo(centerX + mInnerTriangleRadius, centerY);
         mPath.lineTo(centerX - mInnerTriangleRadius / 2, (float) (centerY + Math.sqrt(3) * mInnerTriangleRadius / 2));
@@ -150,7 +148,6 @@ public class LoadingView extends View {
         }
         return resultSize;
     }
-
 
     @Override
     protected void onDraw(Canvas canvas) {

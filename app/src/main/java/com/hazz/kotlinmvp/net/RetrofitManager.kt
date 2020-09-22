@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit
  *
  */
 
-object RetrofitManager{
+object RetrofitManager {
 
     val service: ApiService by lazy (LazyThreadSafetyMode.SYNCHRONIZED){
         getRetrofit().create(ApiService::class.java)
@@ -28,7 +28,7 @@ object RetrofitManager{
     private var token:String by Preference("token","")
 
     /**
-     * 设置公共参数
+     * Set public parameters
      */
     private fun addQueryParameterInterceptor(): Interceptor {
         return Interceptor { chain ->
@@ -45,7 +45,7 @@ object RetrofitManager{
     }
 
     /**
-     * 设置头
+     * Set header
      */
     private fun addHeaderInterceptor(): Interceptor {
         return Interceptor { chain ->
@@ -60,7 +60,7 @@ object RetrofitManager{
     }
 
     /**
-     * 设置缓存
+     * Set cache
      */
     private fun addCacheInterceptor(): Interceptor {
         return Interceptor { chain ->
@@ -73,16 +73,22 @@ object RetrofitManager{
             val response = chain.proceed(request)
             if (NetworkUtil.isNetworkAvailable(MyApplication.context)) {
                 val maxAge = 0
-                // 有网络时 设置缓存超时时间0个小时 ,意思就是不读取缓存数据,只对get有用,post没有缓冲
+                // When there is a network, set the cache timeout time to 0 hours,
+                // which means that the cached data is not read, only useful for get,
+                // and the post is not buffered
                 response.newBuilder()
-                        .header("Cache-Control", "public, max-age=" + maxAge)
-                        .removeHeader("Retrofit")// 清除头信息，因为服务器如果不支持，会返回一些干扰信息，不清除下面无法生效
+                        .header("Cache-Control", "public, max-age=$maxAge")
+                        // Clear the header information, because if the server does not support it,
+                        // it will return some interference information.
+                        // If it is not cleared, the following will not take effect
+                        .removeHeader("Retrofit")
                         .build()
             } else {
-                // 无网络时，设置超时为4周  只对get有用,post没有缓冲
+                // When there is no network, set the timeout to 4 weeks.
+                // It is only useful for get, and the post is not buffered
                 val maxStale = 60 * 60 * 24 * 28
                 response.newBuilder()
-                        .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
+                        .header("Cache-Control", "public, only-if-cached, max-stale=$maxStale")
                         .removeHeader("nyn")
                         .build()
             }
@@ -91,9 +97,9 @@ object RetrofitManager{
     }
 
     private fun getRetrofit(): Retrofit {
-        // 获取retrofit的实例
+        // Get an instance of retrofit
         return Retrofit.Builder()
-                .baseUrl(UrlConstant.BASE_URL)  //自己配置
+                .baseUrl(UrlConstant.BASE_URL)  // Configure yourself
                 .client(getOkHttpClient())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -102,26 +108,25 @@ object RetrofitManager{
     }
 
     private fun getOkHttpClient(): OkHttpClient {
-        //添加一个log拦截器,打印所有的log
+        // Add a log interceptor to print all logs
         val httpLoggingInterceptor = HttpLoggingInterceptor()
-        //可以设置请求过滤的水平,body,basic,headers
+
+        // You can set the level of request filtering, body, basic, headers
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
-        //设置 请求的缓存的大小跟位置
+        // Set the size and location of the requested cache
         val cacheFile = File(MyApplication.context.cacheDir, "cache")
         val cache = Cache(cacheFile, 1024 * 1024 * 50) //50Mb 缓存的大小
 
         return OkHttpClient.Builder()
-                .addInterceptor(addQueryParameterInterceptor())  //参数添加
-                .addInterceptor(addHeaderInterceptor()) // token过滤
+                .addInterceptor(addQueryParameterInterceptor())  // Parameter addition
+                .addInterceptor(addHeaderInterceptor()) // token filter
 //              .addInterceptor(addCacheInterceptor())
-                .addInterceptor(httpLoggingInterceptor) //日志,所有的请求响应度看到
-                .cache(cache)  //添加缓存
+                .addInterceptor(httpLoggingInterceptor) // Log, see all request responsiveness
+                .cache(cache)  // Add cache
                 .connectTimeout(60L, TimeUnit.SECONDS)
                 .readTimeout(60L, TimeUnit.SECONDS)
                 .writeTimeout(60L, TimeUnit.SECONDS)
                 .build()
     }
-
-
 }

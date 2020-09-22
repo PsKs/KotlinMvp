@@ -7,13 +7,13 @@ import io.reactivex.Observable
 
 /**
  * Created by xuhao on 2017/11/21.
- * desc: 首页精选 model
+ * desc: Home Featured model
  */
 
 class HomeModel{
 
     /**
-     * 获取首页 Banner 数据
+     * Get homepage banner data
      */
     fun requestHomeData(num:Int):Observable<HomeBean>{
         return RetrofitManager.service.getFirstHomeData(num)
@@ -21,14 +21,11 @@ class HomeModel{
     }
 
     /**
-     * 加载更多
+     * load more
      */
     fun loadMoreData(url:String):Observable<HomeBean>{
 
         return RetrofitManager.service.getMoreHomeData(url)
                 .compose(SchedulerUtils.ioToMain())
     }
-
-
-
 }

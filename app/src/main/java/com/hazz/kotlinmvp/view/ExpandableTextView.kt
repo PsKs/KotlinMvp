@@ -16,9 +16,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.hazz.kotlinmvp.R
 
-
 /**
- * 可折叠，展开的TextView
+ * Collapsible, expandable TextView
  * Created by xuhao on 2017/11/27
  */
 class ExpandableTextView : LinearLayout, View.OnClickListener {
@@ -28,15 +27,16 @@ class ExpandableTextView : LinearLayout, View.OnClickListener {
 
     private var mRelayout: Boolean = false
 
-    private var mCollapsed = true  // 用来标记处于折叠还是展开的状态，Show short version as default.默认显示为折叠状态
+    private var mCollapsed = true  // Used to mark the state of being collapsed or expanded,
+    // Show short version as default. The default display is the collapsed state
 
-    private var mExpandDrawable: Drawable? = null   // 折叠时候的显示图标▼
+    private var mExpandDrawable: Drawable? = null   // Display icon when folded▼
 
-    private var mCollapseDrawable: Drawable? = null // 展开时候的显示图标▲
+    private var mCollapseDrawable: Drawable? = null // Display icon when unfolding▲
 
-    private var mMaxCollapsedLines: Int = 0     // 设置最多的折叠行数
+    private var mMaxCollapsedLines: Int = 0     // Set the maximum number of folding lines
 
-    private var mTextHeightWithMaxLines: Int = 0    // TextView的最大高度
+    private var mTextHeightWithMaxLines: Int = 0    // The maximum height of the TextView
 
     private var mMarginBetweenTxtAndBottom: Int = 0
     private var mCollapsedHeight: Int = 0
@@ -47,7 +47,6 @@ class ExpandableTextView : LinearLayout, View.OnClickListener {
     /* Listener for callback */
     private val mListener: OnExpandStateChangeListener? = null
 
-
     var text: CharSequence?
         get() = if (mTextView == null) "" else mTextView!!.text
         set(text) {
@@ -55,7 +54,6 @@ class ExpandableTextView : LinearLayout, View.OnClickListener {
             mTextView!!.text = text
             visibility = if (TextUtils.isEmpty(text)) View.GONE else View.VISIBLE
         }
-
 
     constructor(context: Context) : super(context)
 
@@ -65,7 +63,6 @@ class ExpandableTextView : LinearLayout, View.OnClickListener {
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         initView(attrs)
-
     }
 
     private fun initView(attrs: AttributeSet) {
@@ -92,9 +89,8 @@ class ExpandableTextView : LinearLayout, View.OnClickListener {
         visibility = View.GONE
     }
 
-
     /**
-     * 该组合控件只支持垂直布局
+     * This combination control only supports vertical layout
      *
      * @param orientation
      */
@@ -162,7 +158,7 @@ class ExpandableTextView : LinearLayout, View.OnClickListener {
     }
 
     /**
-     * 点击展开/折叠
+     * Click to expand/collapse/折叠
      */
     override fun onClick(view: View) {
         if (mButton!!.visibility != View.VISIBLE) {
@@ -249,7 +245,7 @@ class ExpandableTextView : LinearLayout, View.OnClickListener {
         private val DEFAULT_ANIM_ALPHA_START = 0.7f
 
         /**
-         * 获取TextView真正的高度
+         * Get the true height of the TextView
          *
          * @param textView
          * @return
@@ -281,10 +277,4 @@ class ExpandableTextView : LinearLayout, View.OnClickListener {
             view!!.startAnimation(alphaAnimation)
         }
     }
-
-
-
 }
-
-
-

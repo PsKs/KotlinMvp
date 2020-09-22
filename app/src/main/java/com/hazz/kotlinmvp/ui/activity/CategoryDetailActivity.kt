@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_category_detail.*
 
 /**
  * Created by xuhao on 2017/11/30.
- * desc: 分类详情
+ * desc: Category details
  */
 class CategoryDetailActivity : BaseActivity(), CategoryDetailContract.View {
 
@@ -35,13 +35,12 @@ class CategoryDetailActivity : BaseActivity(), CategoryDetailContract.View {
     }
 
     /**
-     * 是否加载更多
+     * Whether to load more
      */
     private var loadingMore = false
 
     override fun initData() {
         categoryData = intent.getSerializableExtra(Constants.BUNDLE_CATEGORY_DATA) as CategoryBean?
-
     }
 
     override fun layoutId(): Int = R.layout.activity_category_detail
@@ -52,7 +51,7 @@ class CategoryDetailActivity : BaseActivity(), CategoryDetailContract.View {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener { finish() }
 
-        // 加载headerImage
+        // Load header Image
         GlideApp.with(this)
                 .load(categoryData?.headerImage)
                 .placeholder(R.color.color_darker_gray)
@@ -61,12 +60,12 @@ class CategoryDetailActivity : BaseActivity(), CategoryDetailContract.View {
         tv_category_desc.text ="#${categoryData?.description}#"
 
         collapsing_toolbar_layout.title = categoryData?.name
-        collapsing_toolbar_layout.setExpandedTitleColor(Color.WHITE) //设置还没收缩时状态下字体颜色
-        collapsing_toolbar_layout.setCollapsedTitleTextColor(Color.BLACK) //设置收缩后Toolbar上字体的颜色
+        collapsing_toolbar_layout.setExpandedTitleColor(Color.WHITE) // Set the font color when the state is not contracted
+        collapsing_toolbar_layout.setCollapsedTitleTextColor(Color.BLACK) // Set the color of the font on the Toolbar after shrinking
 
         mRecyclerView.layoutManager = LinearLayoutManager(this)
         mRecyclerView.adapter = mAdapter
-        //实现自动加载
+        // Realize automatic loading
         mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
@@ -79,14 +78,14 @@ class CategoryDetailActivity : BaseActivity(), CategoryDetailContract.View {
             }
         })
 
-        //状态栏透明和间距处理
+        // Status bar transparency and spacing processing
         StatusBarUtil.darkMode(this)
         StatusBarUtil.setPaddingSmart(this, toolbar)
 
     }
 
     override fun start() {
-        //获取当前分类列表
+        // Get the current category list
         categoryData?.id?.let { mPresenter.getCategoryDetailList(it) }
     }
 
@@ -112,7 +111,4 @@ class CategoryDetailActivity : BaseActivity(), CategoryDetailContract.View {
         super.onDestroy()
         mPresenter.detachView()
     }
-
-
-
 }

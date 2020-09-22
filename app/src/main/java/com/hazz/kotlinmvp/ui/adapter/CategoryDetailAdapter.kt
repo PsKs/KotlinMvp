@@ -20,29 +20,27 @@ import com.hazz.kotlinmvp.view.recyclerview.adapter.CommonAdapter
 
 /**
  * Created by xuhao on 2017/11/30.
- * desc:分类详情Adapter
+ * desc: Category Details Adapter
  */
 class CategoryDetailAdapter(context: Context, dataList: ArrayList<HomeBean.Issue.Item>, layoutId: Int)
     : CommonAdapter<HomeBean.Issue.Item>(context, dataList, layoutId) {
-
 
     fun addData(dataList: ArrayList<HomeBean.Issue.Item>) {
         this.mData.addAll(dataList)
         notifyDataSetChanged()
     }
 
-
     override fun bindData(holder: ViewHolder, data: HomeBean.Issue.Item, position: Int) {
         setVideoItem(holder, data)
     }
 
     /**
-     * 加载 content item
+     * Load content item
      */
     private fun setVideoItem(holder: ViewHolder, item: HomeBean.Issue.Item) {
         val itemData = item.data
         val cover = itemData?.cover?.feed?:""
-        // 加载封页图
+        // Load cover page image
         GlideApp.with(mContext)
                 .load(cover)
                 .apply(RequestOptions().placeholder(R.drawable.placeholder_banner))
@@ -50,7 +48,7 @@ class CategoryDetailAdapter(context: Context, dataList: ArrayList<HomeBean.Issue
                 .into(holder.getView(R.id.iv_image))
         holder.setText(R.id.tv_title, itemData?.title?:"")
 
-        // 格式化时间
+        // Format time
         val timeFormat = durationFormat(itemData?.duration)
 
         holder.setText(R.id.tv_tag, "#${itemData?.category}/$timeFormat")
@@ -63,7 +61,7 @@ class CategoryDetailAdapter(context: Context, dataList: ArrayList<HomeBean.Issue
     }
 
     /**
-     * 跳转到视频详情页面播放
+     * Jump to the video details page to play
      *
      * @param activity
      * @param view
@@ -82,5 +80,4 @@ class CategoryDetailAdapter(context: Context, dataList: ArrayList<HomeBean.Issue
             activity.overridePendingTransition(R.anim.anim_in, R.anim.anim_out)
         }
     }
-
 }

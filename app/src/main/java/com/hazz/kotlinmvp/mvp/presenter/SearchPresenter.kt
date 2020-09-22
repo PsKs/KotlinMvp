@@ -7,7 +7,7 @@ import com.hazz.kotlinmvp.net.exception.ExceptionHandle
 
 /**
  * Created by xuhao on 2017/12/4.
- * desc: 搜索的 Presenter
+ * desc: Searched Presenter
  */
 class SearchPresenter : BasePresenter<SearchContract.View>(), SearchContract.Presenter {
 
@@ -15,12 +15,10 @@ class SearchPresenter : BasePresenter<SearchContract.View>(), SearchContract.Pre
 
     private val searchModel by lazy { SearchModel() }
 
-
     /**
-     * 获取热门关键词
+     * Get popular keywords
      */
     override fun requestHotWordData() {
-        checkViewAttached()
         checkViewAttached()
         mRootView?.apply {
             closeSoftKeyboard()
@@ -33,14 +31,14 @@ class SearchPresenter : BasePresenter<SearchContract.View>(), SearchContract.Pre
                     }
                 }, { throwable ->
                     mRootView?.apply {
-                        //处理异常
+                        // Handle exception
                         showError(ExceptionHandle.handleException(throwable),ExceptionHandle.errorCode)
                     }
                 }))
     }
 
     /**
-     * 查询关键词
+     * Query keywords
      */
     override fun querySearchData(words: String) {
         checkViewAttached()
@@ -61,7 +59,7 @@ class SearchPresenter : BasePresenter<SearchContract.View>(), SearchContract.Pre
                 }, { throwable ->
                     mRootView?.apply {
                         dismissLoading()
-                        //处理异常
+                        // Handle exception
                         showError(ExceptionHandle.handleException(throwable),ExceptionHandle.errorCode)
                     }
                 })
@@ -70,7 +68,7 @@ class SearchPresenter : BasePresenter<SearchContract.View>(), SearchContract.Pre
     }
 
     /**
-     * 加载更多数据
+     * Load more data
      */
     override fun loadMoreData() {
         checkViewAttached()
@@ -83,13 +81,10 @@ class SearchPresenter : BasePresenter<SearchContract.View>(), SearchContract.Pre
                         }
                     }, { throwable ->
                         mRootView?.apply {
-                            //处理异常
+                            // Handle exception
                             showError(ExceptionHandle.handleException(throwable),ExceptionHandle.errorCode)
                         }
                     }))
         }
-
     }
-
-
 }

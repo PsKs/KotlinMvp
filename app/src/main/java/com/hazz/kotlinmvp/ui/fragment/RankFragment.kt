@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.fragment_rank.*
  */
 class RankFragment : BaseFragment(), RankContract.View {
 
-
     private val mPresenter by lazy { RankPresenter() }
 
     private val mAdapter by lazy { activity?.let { CategoryDetailAdapter(it, itemList, R.layout.item_category_detail) } }
@@ -49,7 +48,6 @@ class RankFragment : BaseFragment(), RankContract.View {
         mRecyclerView.adapter = mAdapter
 
         mLayoutStatusView =multipleStatusView
-
     }
 
     override fun lazyLoad() {

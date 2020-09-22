@@ -7,7 +7,7 @@ import com.hazz.kotlinmvp.net.exception.ExceptionHandle
 
 /**
  * Created by xuhao on 2017/11/29.
- * desc:分类的 Presenter
+ * desc: Category Presenter
  */
 class CategoryPresenter : BasePresenter<CategoryContract.View>(), CategoryContract.Presenter {
 
@@ -16,7 +16,7 @@ class CategoryPresenter : BasePresenter<CategoryContract.View>(), CategoryContra
     }
 
     /**
-     * 获取分类
+     * Get classification
      */
     override fun getCategoryData() {
         checkViewAttached()
@@ -29,7 +29,7 @@ class CategoryPresenter : BasePresenter<CategoryContract.View>(), CategoryContra
                     }
                 }, { t ->
                     mRootView?.apply {
-                        //处理异常
+                        //Handle exception
                         showError(ExceptionHandle.handleException(t),ExceptionHandle.errorCode)
                     }
 

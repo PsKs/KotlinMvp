@@ -31,7 +31,7 @@ import kotlinx.android.synthetic.main.activity_search.*
 
 /**
  * Created by xuhao on 2017/12/1.
- * desc:搜索功能
+ * desc:Search function
  */
 
 class SearchActivity : BaseActivity(), SearchContract.View {
@@ -49,25 +49,25 @@ class SearchActivity : BaseActivity(), SearchContract.View {
     private var keyWords: String? = null
 
     /**
-     * 是否加载更多
+     * Whether to load more
      */
     private var loadingMore = false
 
     init {
         mPresenter.attachView(this)
-        //细黑简体字体
+        // Thin black simplified font
         mTextTypeface = Typeface.createFromAsset(MyApplication.context.assets, "fonts/FZLanTingHeiS-L-GB-Regular.TTF")
     }
 
     override fun layoutId(): Int = R.layout.activity_search
 
     /**
-     * 进入页面
+     * Enter the page
      */
     override fun initData() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setUpEnterAnimation() // 入场动画
-            setUpExitAnimation() // 退场动画
+            setUpEnterAnimation() // Start animation
+            setUpExitAnimation() // Exit animation
         } else {
             setUpView()
         }
@@ -76,11 +76,11 @@ class SearchActivity : BaseActivity(), SearchContract.View {
     override fun initView() {
         tv_title_tip.typeface = mTextTypeface
         tv_hot_search_words.typeface = mTextTypeface
-        //初始化查询结果的 RecyclerView
+        // Initialize the RecyclerView of the query result
         mRecyclerView_result.layoutManager = LinearLayoutManager(this)
         mRecyclerView_result.adapter = mResultAdapter
 
-        //实现自动加载
+        // Realize automatic loading
         mRecyclerView_result.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
@@ -93,16 +93,16 @@ class SearchActivity : BaseActivity(), SearchContract.View {
             }
         })
 
-        //取消
+        // cancel
         tv_cancel.setOnClickListener { onBackPressed() }
-        //键盘的搜索按钮
+        // Keyboard search button
         et_search_view.setOnEditorActionListener(object : TextView.OnEditorActionListener {
             override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     closeSoftKeyboard()
                     keyWords = et_search_view.text.toString().trim()
                     if (keyWords.isNullOrEmpty()) {
-                        showToast("请输入你感兴趣的关键词")
+                        showToast("Please enter the keywords you are interested in")
                     } else {
                         mPresenter.querySearchData(keyWords!!)
                     }
@@ -114,20 +114,20 @@ class SearchActivity : BaseActivity(), SearchContract.View {
 
         mLayoutStatusView = multipleStatusView
 
-        //状态栏透明和间距处理
+        // Status bar transparency and spacing processing
         StatusBarUtil.darkMode(this)
         StatusBarUtil.setPaddingSmart(this, toolbar)
 
     }
     /**
-     * 关闭软件盘
+     * Close the software disk
      */
     override fun closeSoftKeyboard() {
         closeKeyBord(et_search_view, applicationContext)
     }
 
     override fun start() {
-        //请求热门关键词
+        // Request popular keywords
         mPresenter.requestHotWordData()
     }
 
@@ -140,21 +140,21 @@ class SearchActivity : BaseActivity(), SearchContract.View {
     }
 
     /**
-     * 设置热门关键词
+     * Set popular keywords
      */
     override fun setHotWordData(string: ArrayList<String>) {
         showHotWordView()
         mHotKeywordsAdapter = HotKeywordsAdapter(this, string, R.layout.item_flow_text)
 
         val flexBoxLayoutManager = FlexboxLayoutManager(this)
-        flexBoxLayoutManager.flexWrap = FlexWrap.WRAP      //按正常方向换行
-        flexBoxLayoutManager.flexDirection = FlexDirection.ROW   //主轴为水平方向，起点在左端
-        flexBoxLayoutManager.alignItems = AlignItems.CENTER    //定义项目在副轴轴上如何对齐
-        flexBoxLayoutManager.justifyContent = JustifyContent.FLEX_START  //多个轴对齐方式
+        flexBoxLayoutManager.flexWrap = FlexWrap.WRAP      // Wrap in the normal direction
+        flexBoxLayoutManager.flexDirection = FlexDirection.ROW   // The main axis is horizontal, and the starting point is at the left end
+        flexBoxLayoutManager.alignItems = AlignItems.CENTER    // Define how items are aligned on the counter axis
+        flexBoxLayoutManager.justifyContent = JustifyContent.FLEX_START  // Multiple axis alignment
 
         mRecyclerView_hot.layoutManager = flexBoxLayoutManager
         mRecyclerView_hot.adapter = mHotKeywordsAdapter
-        //设置 Tag 的点击事件
+        // Set tag click event
         mHotKeywordsAdapter?.setOnTagItemClickListener {
             closeSoftKeyboard()
             keyWords = it
@@ -163,7 +163,7 @@ class SearchActivity : BaseActivity(), SearchContract.View {
     }
 
     /**
-     * 设置搜索结果
+     * Set search results
      */
     override fun setSearchResult(issue: HomeBean.Issue) {
         loadingMore = false
@@ -174,8 +174,6 @@ class SearchActivity : BaseActivity(), SearchContract.View {
 
         itemList = issue.itemList
         mResultAdapter.addData(issue.itemList)
-
-
     }
 
     override fun showError(errorMsg: String, errorCode: Int) {
@@ -188,17 +186,17 @@ class SearchActivity : BaseActivity(), SearchContract.View {
     }
 
     /**
-     * 没有找到相匹配的内容
+     * No match found
      */
     override fun setEmptyView() {
-        showToast("抱歉，没有找到相匹配的内容")
+        showToast("Sorry, no matches were found")
         hideHotWordView()
         tv_search_count.visibility = View.GONE
         mLayoutStatusView?.showEmpty()
     }
 
     /**
-     * 隐藏热门关键字的 View
+     * Hide View of Popular Keywords
      */
     private fun hideHotWordView(){
         layout_hot_words.visibility = View.GONE
@@ -206,7 +204,7 @@ class SearchActivity : BaseActivity(), SearchContract.View {
     }
 
     /**
-     * 显示热门关键字的 流式布局
+     * Streaming layout showing popular keywords
      */
     private fun showHotWordView(){
         layout_hot_words.visibility = View.VISIBLE
@@ -214,7 +212,7 @@ class SearchActivity : BaseActivity(), SearchContract.View {
     }
 
     /**
-     * 退场动画
+     * Exit animation
      */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private fun setUpExitAnimation() {
@@ -224,7 +222,7 @@ class SearchActivity : BaseActivity(), SearchContract.View {
     }
 
     /**
-     * 进场动画
+     * Enter Animation
      */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private fun setUpEnterAnimation() {
@@ -260,13 +258,13 @@ class SearchActivity : BaseActivity(), SearchContract.View {
         animation.duration = 300
         rel_container.startAnimation(animation)
         rel_container.visibility = View.VISIBLE
-        //打开软键盘
+        // Open soft keyboard
         openKeyBord(et_search_view, applicationContext)
     }
 
 
     /**
-     * 展示动画
+     * Show animation
      */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private fun animateRevealShow() {
@@ -285,7 +283,7 @@ class SearchActivity : BaseActivity(), SearchContract.View {
     }
 
 
-    // 返回事件
+    // Return event
     override fun onBackPressed() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ViewAnimUtils.animateRevealHide(
@@ -305,7 +303,7 @@ class SearchActivity : BaseActivity(), SearchContract.View {
         }
     }
 
-    // 默认回退
+    // Default fallback
     private fun defaultBackPressed() {
         closeSoftKeyboard()
         super.onBackPressed()

@@ -26,11 +26,9 @@ import java.util.*
 @Suppress("DEPRECATION")
 /**
  * Created by xuhao on 2017/11/8.
- * 首页精选
+ * Home Featured
  */
-
 class HomeFragment : BaseFragment(), HomeContract.View {
-
 
     private val mPresenter by lazy { HomePresenter() }
 
@@ -43,6 +41,7 @@ class HomeFragment : BaseFragment(), HomeContract.View {
     private var loadingMore = false
 
     private var isRefresh = false
+
     private var mMaterialHeader: MaterialHeader? = null
 
     companion object {
@@ -64,27 +63,24 @@ class HomeFragment : BaseFragment(), HomeContract.View {
         SimpleDateFormat("- MMM. dd, 'Brunch' -", Locale.ENGLISH)
     }
 
-
     override fun getLayoutId(): Int = R.layout.fragment_home
 
-
     /**
-     * 初始化 ViewI
+     * Initialize ViewI
      */
     override fun initView() {
         mPresenter.attachView(this)
-        //内容跟随偏移
+        // Content follows offset
         mRefreshLayout.setEnableHeaderTranslationContent(true)
         mRefreshLayout.setOnRefreshListener {
             isRefresh = true
             mPresenter.requestHomeData(num)
         }
         mMaterialHeader = mRefreshLayout.refreshHeader as MaterialHeader?
-        //打开下拉刷新区域块背景:
+        // Open the drop-down refresh area block background:
         mMaterialHeader?.setShowBezierWave(true)
-        //设置下拉刷新主题颜色
+        // Set drop-down refresh theme color
         mRefreshLayout.setPrimaryColorsId(R.color.color_light_black, R.color.color_title_bg)
-
 
         mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
@@ -102,12 +98,12 @@ class HomeFragment : BaseFragment(), HomeContract.View {
                 }
             }
 
-            //RecyclerView滚动的时候调用
+            // Called when RecyclerView scrolls
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val currentVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition()
                 if (currentVisibleItemPosition == 0) {
-                    //背景设置为透明
+                    // Set the background to transparent
                     toolbar.setBackgroundColor(getColor(R.color.color_translucent))
                     iv_search.setImageResource(R.mipmap.ic_action_search_white)
                     tv_header_title.text = ""
@@ -124,8 +120,6 @@ class HomeFragment : BaseFragment(), HomeContract.View {
                         }
                     }
                 }
-
-
             }
         })
 
@@ -133,10 +127,9 @@ class HomeFragment : BaseFragment(), HomeContract.View {
 
         mLayoutStatusView = multipleStatusView
 
-        //状态栏透明和间距处理
+        // Status bar transparency and spacing processing
         activity?.let { StatusBarUtil.darkMode(it) }
         activity?.let { StatusBarUtil.setPaddingSmart(it, toolbar) }
-
     }
 
     private fun openSearchActivity() {
@@ -154,7 +147,7 @@ class HomeFragment : BaseFragment(), HomeContract.View {
 
 
     /**
-     * 显示 Loading （下拉刷新的时候不需要显示 Loading）
+     * Display Loading (do not display Loading when pull down to refresh)
      */
     override fun showLoading() {
         if (!isRefresh) {
@@ -164,14 +157,14 @@ class HomeFragment : BaseFragment(), HomeContract.View {
     }
 
     /**
-     * 隐藏 Loading
+     * Hide Loading
      */
     override fun dismissLoading() {
         mRefreshLayout.finishRefresh()
     }
 
     /**
-     * 设置首页数据
+     * Set homepage data
      */
     override fun setHomeData(homeBean: HomeBean) {
         mLayoutStatusView?.showContent()
@@ -179,7 +172,7 @@ class HomeFragment : BaseFragment(), HomeContract.View {
 
         // Adapter
         mHomeAdapter = activity?.let { HomeAdapter(it, homeBean.issueList[0].itemList) }
-        //设置 banner 大小
+        // Set banner size
         mHomeAdapter?.setBannerSize(homeBean.issueList[0].count)
 
         mRecyclerView.adapter = mHomeAdapter
@@ -195,7 +188,7 @@ class HomeFragment : BaseFragment(), HomeContract.View {
 
 
     /**
-     * 显示错误信息
+     * Show error message
      */
     override fun showError(msg: String, errorCode: Int) {
         showToast(msg)
@@ -215,6 +208,4 @@ class HomeFragment : BaseFragment(), HomeContract.View {
     fun getColor(colorId: Int): Int {
         return resources.getColor(colorId)
     }
-
-
 }

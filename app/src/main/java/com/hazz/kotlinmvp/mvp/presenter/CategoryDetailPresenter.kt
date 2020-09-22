@@ -17,7 +17,7 @@ class CategoryDetailPresenter:BasePresenter<CategoryDetailContract.View>(),Categ
     private var nextPageUrl:String?=null
 
     /**
-     * 获取分类详情的列表信息
+     * Get list information of category details
      */
     override fun getCategoryDetailList(id: Long) {
         checkViewAttached()
@@ -39,7 +39,7 @@ class CategoryDetailPresenter:BasePresenter<CategoryDetailContract.View>(),Categ
     }
 
     /**
-     * 加载更多数据
+     * Load more data
      */
     override fun loadMoreData() {
         val disposable = nextPageUrl?.let {

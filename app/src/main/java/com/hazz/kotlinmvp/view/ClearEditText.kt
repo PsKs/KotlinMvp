@@ -12,12 +12,11 @@ import com.hazz.kotlinmvp.R
 
 /**
  * Created by xuhao on 2017/12/4.
- * desc:带删除按钮的EditText
+ * desc: EditText with delete button
  */
-
 class ClearEditText @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null,
                                               defStyle: Int = android.R.attr.editTextStyle) : EditText(context, attrs, defStyle), View.OnFocusChangeListener, TextWatcher {
-    //EditText右侧的删除按钮
+    // Delete button on the right side of EditText
     private var mClearDrawable: Drawable? = null
     private var hasFocus: Boolean = false
 
@@ -27,7 +26,8 @@ class ClearEditText @JvmOverloads constructor(context: Context, attrs: Attribute
 
     @Suppress("DEPRECATION")
     private fun init() {
-        // 获取EditText的DrawableRight,假如没有设置我们就使用默认的图片,获取图片的顺序是左上右下（0,1,2,3,）
+        // Get EditText's DrawableRight. If it is not set, we will use the default picture.
+        // The order of getting pictures is upper left and lower right (0,1,2,3,)
         mClearDrawable = compoundDrawables[2]
         if (mClearDrawable == null) {
             mClearDrawable = resources.getDrawable(
@@ -36,27 +36,28 @@ class ClearEditText @JvmOverloads constructor(context: Context, attrs: Attribute
 
         mClearDrawable!!.setBounds(0, 0, mClearDrawable!!.intrinsicWidth,
                 mClearDrawable!!.intrinsicHeight)
-        // 默认设置隐藏图标
+        // Hide icon by default
         setClearIconVisible(false)
-        // 设置焦点改变的监听
+        // Set up monitoring for focus changes
         onFocusChangeListener = this
-        // 设置输入框里面内容发生改变的监听
+        // Set up monitoring for changes in the content of the input box
         addTextChangedListener(this)
     }
 
-    /* @说明：isInnerWidth, isInnerHeight为true，触摸点在删除图标之内，则视为点击了删除图标
-     * event.getX() 获取相对应自身左上角的X坐标
-     * event.getY() 获取相对应自身左上角的Y坐标
-     * getWidth() 获取控件的宽度
-     * getHeight() 获取控件的高度
+    /*
+     * @Description：isInnerWidth, isInnerHeight为true，If the touch point is within the delete icon, it is deemed to have clicked the delete icon
+     * event.getX() Get the X coordinate corresponding to the upper left corner of itself
+     * event.getY() Get the Y coordinate corresponding to the upper left corner of itself
+     * getWidth() Get the width of the control
+     * getHeight() Get the height of the control
      * getTotalPaddingRight() 获取删除图标左边缘到控件右边缘的距离
      * getPaddingRight() 获取删除图标右边缘到控件右边缘的距离
      * isInnerWidth:
-     *  getWidth() - getTotalPaddingRight() 计算删除图标左边缘到控件左边缘的距离
-     *  getWidth() - getPaddingRight() 计算删除图标右边缘到控件左边缘的距离
+     * getWidth() - getTotalPaddingRight() Get the distance from the left edge of the delete icon to the right edge of the control
+     * getWidth() - getPaddingRight() Calculate the distance from the right edge of the delete icon to the left edge of the control
      * isInnerHeight:
-     *  distance 删除图标顶部边缘到控件顶部边缘的距离
-     *  distance + height 删除图标底部边缘到控件顶部边缘的距离
+     * distance - Delete the distance from the top edge of the icon to the top edge of the control
+     * distance + height - Delete the distance from the bottom edge of the icon to the top edge of the control
      */
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_UP) {
@@ -77,8 +78,8 @@ class ClearEditText @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
     /**
-     * 当ClearEditText焦点发生变化的时候，
-     * 输入长度为零，隐藏删除图标，否则，显示删除图标
+     * When the focus of ClearEditText changes,
+     * Enter a length of zero, hide the delete icon, otherwise, display the delete icon
      */
     override fun onFocusChange(v: View, hasFocus: Boolean) {
         this.hasFocus = hasFocus
@@ -109,6 +110,4 @@ class ClearEditText @JvmOverloads constructor(context: Context, attrs: Attribute
     override fun afterTextChanged(s: Editable) {
 
     }
-
-
 }

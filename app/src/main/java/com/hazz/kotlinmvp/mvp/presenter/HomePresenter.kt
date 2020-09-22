@@ -8,8 +8,9 @@ import com.hazz.kotlinmvp.net.exception.ExceptionHandle
 
 /**
  * Created by xuhao on 2017/11/8.
- * 首页精选的 Presenter
- * (数据是 Banner 数据和一页数据组合而成的 HomeBean,查看接口然后在分析就明白了)
+ * Home Featured Presenter
+ * (The data is a HomeBean composed of Banner data and a page of data.
+ * Check the interface and analyze it to understand)
  */
 
 class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter {
@@ -17,7 +18,7 @@ class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter
 
     private var bannerHomeBean: HomeBean? = null
 
-    private var nextPageUrl:String?=null     //加载首页的Banner 数据+一页数据合并后，nextPageUrl没 add
+    private var nextPageUrl:String? = null // After loading the banner data of the homepage + one page of data, nextPageUrl does not add
 
     private val homeModel: HomeModel by lazy {
 
@@ -25,29 +26,29 @@ class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter
     }
 
     /**
-     * 获取首页精选数据 banner 加 一页数据
+     * Get featured data on the homepage banner plus one page of data
      */
     override fun requestHomeData(num: Int) {
-        // 检测是否绑定 View
+        // Check whether View is bound
         checkViewAttached()
         mRootView?.showLoading()
         val disposable = homeModel.requestHomeData(num)
                 .flatMap { homeBean ->
 
-                    //过滤掉 Banner2(包含广告,等不需要的 Type), 具体查看接口分析
+                    // Filter out Banner2 (including advertisements, and other unwanted Types),
+                    // and check the interface analysis for details
                     val bannerItemList = homeBean.issueList[0].itemList
 
                     bannerItemList.filter { item ->
                         item.type=="banner2"|| item.type=="horizontalScrollCard"
                     }.forEach{ item ->
-                        //移除 item
+                        // Remove item
                         bannerItemList.remove(item)
                     }
 
-                    bannerHomeBean = homeBean //记录第一页是当做 banner 数据
+                    bannerHomeBean = homeBean // Record the first page as banner data
 
-
-                    //根据 nextPageUrl 请求下一页数据
+                    // Request the next page of data according to nextPageUrl
                     homeModel.loadMoreData(homeBean.nextPageUrl)
                 }
 
@@ -56,23 +57,23 @@ class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter
                         dismissLoading()
 
                         nextPageUrl = homeBean.nextPageUrl
-                        //过滤掉 Banner2(包含广告,等不需要的 Type), 具体查看接口分析
+                        // Filter out Banner2 (including advertisements, and other unwanted Types),
+                        // and check the interface analysis for details
                         val newBannerItemList = homeBean.issueList[0].itemList
 
                         newBannerItemList.filter { item ->
-                            item.type=="banner2"||item.type=="horizontalScrollCard"
+                            item.type == "banner2"||item.type == "horizontalScrollCard"
                         }.forEach{ item ->
-                            //移除 item
+                            // Remove item
                             newBannerItemList.remove(item)
                         }
-                        // 重新赋值 Banner 长度
+                        // Re-assign the banner length
                         bannerHomeBean!!.issueList[0].count = bannerHomeBean!!.issueList[0].itemList.size
 
-                        //赋值过滤后的数据 + banner 数据
+                        // Assigned filtered data + banner data
                         bannerHomeBean?.issueList!![0].itemList.addAll(newBannerItemList)
 
                         setHomeData(bannerHomeBean!!)
-
                     }
 
                 }, { t ->
@@ -87,21 +88,21 @@ class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter
     }
 
     /**
-     * 加载更多
+     * load more
      */
-
     override fun loadMoreData() {
          val disposable = nextPageUrl?.let {
              homeModel.loadMoreData(it)
                      .subscribe({ homeBean->
                          mRootView?.apply {
-                             //过滤掉 Banner2(包含广告,等不需要的 Type), 具体查看接口分析
+                             // Filter out Banner2 (including advertisements, and other unwanted Types),
+                             // and check the interface analysis for details
                              val newItemList = homeBean.issueList[0].itemList
 
                              newItemList.filter { item ->
                                  item.type=="banner2"||item.type=="horizontalScrollCard"
                              }.forEach{ item ->
-                                 //移除 item
+                                 // Remove item
                                  newItemList.remove(item)
                              }
 
@@ -114,14 +115,9 @@ class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter
                              showError(ExceptionHandle.handleException(t),ExceptionHandle.errorCode)
                          }
                      })
-
-
          }
         if (disposable != null) {
             addSubscription(disposable)
         }
     }
-
-
-
 }

@@ -18,9 +18,8 @@ import com.hazz.kotlinmvp.view.recyclerview.adapter.CommonAdapter
 
 /**
  * Created by xuhao on 2017/11/25.
- * desc: 视频详情
+ * desc: Video details
  */
-
 class VideoDetailAdapter(mContext: Context, data: ArrayList<HomeBean.Issue.Item>) :
         CommonAdapter<HomeBean.Issue.Item>(mContext, data, object : MultipleType<HomeBean.Issue.Item> {
             override fun getLayoutId(item: HomeBean.Issue.Item, position: Int): Int {
@@ -34,7 +33,7 @@ class VideoDetailAdapter(mContext: Context, data: ArrayList<HomeBean.Issue.Item>
                     data[position].type == "videoSmallCard" ->
                         R.layout.item_video_small_card
                     else ->
-                        throw IllegalAccessException("Api 解析出错了，出现其他类型")
+                        throw IllegalAccessException("Api parsing error, other types appear")
                 }
             }
         }) {
@@ -46,7 +45,7 @@ class VideoDetailAdapter(mContext: Context, data: ArrayList<HomeBean.Issue.Item>
     }
 
     /**
-     * 添加视频的详细信息
+     * Add video details
      */
     fun addData(item: HomeBean.Issue.Item) {
         mData.clear()
@@ -57,7 +56,7 @@ class VideoDetailAdapter(mContext: Context, data: ArrayList<HomeBean.Issue.Item>
     }
 
     /**
-     * 添加相关推荐等数据 Item
+     * Add related recommendations and other data Item
      */
     fun addData(item: ArrayList<HomeBean.Issue.Item>) {
         mData.addAll(item)
@@ -66,19 +65,16 @@ class VideoDetailAdapter(mContext: Context, data: ArrayList<HomeBean.Issue.Item>
     }
 
     /**
-     * Kotlin的函数可以作为参数，写callback的时候，可以不用interface了
+     * Kotlin functions can be used as parameters. When writing callbacks, you don’t need interface
      */
-
     private var mOnItemClickRelatedVideo: ((item: HomeBean.Issue.Item) -> Unit)? = null
-
 
     fun setOnItemDetailClick(mItemRelatedVideo: (item: HomeBean.Issue.Item) -> Unit) {
         this.mOnItemClickRelatedVideo = mItemRelatedVideo
     }
 
-
     /**
-     * 绑定数据
+     * Bind data
      */
     override fun bindData(holder: ViewHolder, data: HomeBean.Issue.Item, position: Int) {
         when {
@@ -86,7 +82,7 @@ class VideoDetailAdapter(mContext: Context, data: ArrayList<HomeBean.Issue.Item>
 
             data.type == "textCard" -> {
                 holder.setText(R.id.tv_text_card, data.data?.text!!)
-                //设置方正兰亭细黑简体
+                // Set Founder Lanting Fine Black Simplified
                 holder.getView<TextView>(R.id.tv_text_card).typeface =textTypeface
 
             }
@@ -104,28 +100,27 @@ class VideoDetailAdapter(mContext: Context, data: ArrayList<HomeBean.Issue.Item>
                             }
                         })
                 }
-                // 判断onItemClickRelatedVideo 并使用
+                // Determine onItemClickRelatedVideo and use
                 holder.itemView.setOnClickListener { mOnItemClickRelatedVideo?.invoke(data) }
-
             }
-            else -> throw IllegalAccessException("Api 解析出错了，出现其他类型")
+            else -> throw IllegalAccessException("Api parsing error, other types appear")
         }
     }
 
     /**
-     * 设置视频详情数据
+     * Set video details data
      */
     private fun setVideoDetailInfo(data: HomeBean.Issue.Item, holder: ViewHolder) {
         data.data?.title?.let { holder.setText(R.id.tv_title, it) }
-        //视频简介
+        // Video Introduction
         data.data?.description?.let { holder.setText(R.id.expandable_text, it) }
-        //标签
+        // label
         holder.setText(R.id.tv_tag, "#${data.data?.category} / ${durationFormat(data.data?.duration)}")
-        //喜欢
+        // like
         holder.setText(R.id.tv_action_favorites, data.data?.consumption?.collectionCount.toString())
-        //分享
+        // share it
         holder.setText(R.id.tv_action_share, data.data?.consumption?.shareCount.toString())
-        //评论
+        // comment
         holder.setText(R.id.tv_action_reply, data.data?.consumption?.replyCount.toString())
 
         if (data.data?.author != null) {
@@ -148,16 +143,14 @@ class VideoDetailAdapter(mContext: Context, data: ArrayList<HomeBean.Issue.Item>
 
         with(holder) {
             getView<TextView>(R.id.tv_action_favorites).setOnClickListener {
-                Toast.makeText(MyApplication.context, "喜欢", Toast.LENGTH_SHORT).show()
+                Toast.makeText(MyApplication.context, "like", Toast.LENGTH_SHORT).show()
             }
             getView<TextView>(R.id.tv_action_share).setOnClickListener {
-                Toast.makeText(MyApplication.context, "分享", Toast.LENGTH_SHORT).show()
+                Toast.makeText(MyApplication.context, "share it", Toast.LENGTH_SHORT).show()
             }
             getView<TextView>(R.id.tv_action_reply).setOnClickListener {
-                Toast.makeText(MyApplication.context, "评论", Toast.LENGTH_SHORT).show()
+                Toast.makeText(MyApplication.context, "comment", Toast.LENGTH_SHORT).show()
             }
         }
     }
-
-
 }

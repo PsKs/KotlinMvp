@@ -2,8 +2,6 @@ package com.hazz.kotlinmvp.mvp.model.bean
 
 import com.flyco.tablayout.listener.CustomTabEntity
 
-
-
 /**
  * Created by xuhao on 2017/11/8.
  */

@@ -13,10 +13,9 @@ import android.widget.TextView
  * Created by xuhao on 2017/11/22.
  * desc:
  */
-
 class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    //用于缓存已找的界面
+    // Used to cache the found interface
     private var mView: SparseArray<View>?=null
 
     init {
@@ -24,9 +23,9 @@ class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     fun <T : View> getView(viewId: Int): T {
-        //对已有的view做缓存
+        // Cache existing views
         var view: View? = mView?.get(viewId)
-        //使用缓存的方式减少findViewById的次数
+        // Use caching to reduce the number of findViewById
         if (view == null) {
             view = itemView.findViewById(viewId)
             mView?.put(viewId, view)
@@ -36,9 +35,9 @@ class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 
     fun <T : ViewGroup> getViewGroup(viewId: Int): T {
-        //对已有的view做缓存
+        // Cache existing views
         var view: View? = mView?.get(viewId)
-        //使用缓存的方式减少findViewById的次数
+        // Use caching to reduce the number of findViewById
         if (view == null) {
             view = itemView.findViewById(viewId)
             mView?.put(viewId, view)
@@ -47,11 +46,11 @@ class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     @SuppressLint("SetTextI18n")
-    //通用的功能进行封装  设置文本 设置条目点击事件  设置图片
+    // Encapsulate common functions Set text Set item click event Set picture
     fun setText(viewId: Int, text: CharSequence): ViewHolder {
         val view = getView<TextView>(viewId)
         view.text = "" + text
-        //希望可以链式调用
+        // Hope it can be chained
         return this
     }
 
@@ -62,7 +61,7 @@ class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     /**
-     * 设置本地图片
+     * Set local picture
      *
      * @param viewId
      * @param resId
@@ -75,7 +74,7 @@ class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     /**
-     * 加载图片资源路径
+     * Load image resource path
      *
      * @param viewId
      * @param imageLoader
@@ -90,7 +89,7 @@ class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     abstract class HolderImageLoader(val path: String) {
 
         /**
-         * 需要去复写这个方法加载图片
+         * Need to copy this method to load the picture
          *
          * @param iv
          * @param path
@@ -99,7 +98,7 @@ class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     /**
-     * 设置View的Visibility
+     * Set the Visibility of View
      */
     fun setViewVisibility(viewId: Int, visibility: Int): ViewHolder {
         getView<View>(viewId).visibility = visibility
@@ -107,17 +106,16 @@ class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     /**
-     * 设置条目点击事件
+     * Set item click event
      */
     fun setOnItemClickListener(listener: View.OnClickListener) {
         itemView.setOnClickListener(listener)
     }
 
     /**
-     * 设置条目长按事件
+     * Set item long press event
      */
     fun setOnItemLongClickListener(listener: View.OnLongClickListener) {
         itemView.setOnLongClickListener(listener)
     }
-
 }

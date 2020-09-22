@@ -1,5 +1,4 @@
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
@@ -17,11 +16,9 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
-
     <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
 
     <style name="AppTheme.Label">
         <item name="android:layout_width">wrap_content</item>
@@ -31,7 +28,6 @@
         <item name="android:textSize">@dimen/textSize_content</item>
         <item name="android:textColor">@color/color_gray</item>
     </style>
-
 
     <style name="AppTheme.Label.Title">
         <item name="android:textColor">@color/color_black</item>
@@ -53,7 +49,6 @@
         <item name="android:paddingRight">@dimen/padding_common_h</item>
     </style>
 
-
     <style name="AppTheme.DiverLine">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0.5dp</item>
@@ -67,9 +62,5 @@
         <item name="android:layout_height">?attr/actionBarSize</item>
         <item name="android:background">?attr/colorPrimary</item>
         <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
-
     </style>
-
-    
-
 </resources>

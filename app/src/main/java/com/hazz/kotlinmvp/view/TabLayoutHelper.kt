@@ -43,6 +43,5 @@ object TabLayoutHelper{
         } catch (e: IllegalAccessException) {
             e.printStackTrace()
         }
-
     }
 }

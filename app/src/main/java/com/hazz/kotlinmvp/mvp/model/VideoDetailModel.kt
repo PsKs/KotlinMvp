@@ -16,5 +16,4 @@ class VideoDetailModel {
         return RetrofitManager.service.getRelatedData(id)
                 .compose(SchedulerUtils.ioToMain())
     }
-
 }
