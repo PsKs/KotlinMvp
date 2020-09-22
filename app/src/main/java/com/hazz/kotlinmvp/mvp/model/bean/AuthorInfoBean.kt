@@ -12,7 +12,6 @@ data class AuthorInfoBean(val tabInfo: TabInfo,
                        val name: String,
                        val apiUrl: String) : Serializable
 
-
     data class PgcInfo(val dataType: String,
                        val id: Int,
                        val icon: String,
@@ -31,7 +30,6 @@ data class AuthorInfoBean(val tabInfo: TabInfo,
                        val shareCount: Int,
                        val collectCount: Int,
                        val shield: Shield) : Serializable
-
 
     data class Follow(val itemType: String,
                       val itemId: Int,
