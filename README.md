@@ -9,55 +9,47 @@
 [![](https://img.shields.io/badge/Author-xuhao-blue.svg)](http://xuhaoblog.com)
 [![](https://img.shields.io/badge/QQ-504105930-orange.svg)](http://xuhaoblog.com)
 
-## 【由于个人原因该项目停止维护，目前 api 可以使用，可自行clone 进行二次开发、开源、感谢支持】
-
-**[English Document](https://github.com/git-xuhao/KotlinMvp/blob/master/README-en.md)**
-
 ![这里写图片描述](https://github-1253441343.cos.ap-chengdu.myqcloud.com/ic_launcher.png)
 
-- **GitHub地址：** [https://github.com/git-xuhao/KotlinMvp](https://github.com/git-xuhao/KotlinMvp)
+GitHub：[https://github.com/git-xuhao/KotlinMvp](https://github.com/git-xuhao/KotlinMvp)
 
-- **友情链接：** 新版基于MVVM 实现的开眼[https://github.com/VIPyinzhiwei/Eyepetizer](https://github.com/VIPyinzhiwei/Eyepetizer)
+（Open source is not easy, if you like, I hope to give a Star or Fork, thank you!）
 
-- **(附上 Java 版本的MVP基础框架)** [https://github.com/git-xuhao/Android-MVP-Architecture](https://github.com/git-xuhao/Android-MVP-Architecture)
-
-**（开源不易，如果喜欢的话希望给个小星星，谢谢~）**
-
-《KotlinMvp》 是仿着“开眼Eyepetizer”之前版本并加上自己的想法，开发的一款的短视频小应用，每日为你推荐精选视频，让你大开眼界。本项目采用 Kotlin 语言编写，结合 MVP+RxJava2+Retrofit2+Glide等的架构设计，学习 Kotlin 利用空余时间开发的一款小项目，代码结构清晰有详细注释，如有任何疑问和建议请提 Issue或联系[![](https://img.shields.io/badge/Gmail:-igeekho@gmail.com-blue.svg)]() 
+"KotlinMvp" is a short video app that mimics the previous version of Eye-open Eyepetizer and adds your own ideas, a featured video daily that gives you an eye-opener. This project is written in Kotlin language, combined with MVP + RxJava2 + Retrofit2 + Glide and other architecture design, learning Kotlin use spare time to develop a small project, the code clearly structured detailed annotations, if you have any questions and suggestions please raise the issue or contact[![](https://img.shields.io/badge/Gmail:-igeekho@gmail.com-blue.svg)]()
 
 
-## 前言
 
-前段时间学习了 Kotlin 的一些语法，然后就写了这个项目熟悉一下 Android的官方语言，总体下来，感觉比较爽，相比 Java 而言源代码行数有所减少、方法数也有所减少。
+## Foreword
 
-Kotlin 团队为 Android 开发提供了一套超越标准语言功能的工具：
+Kotlin some time ago learned some grammar, and then wrote this project to familiarize yourself with the official language of Android, overall, I feel more cool, compared to Java source code lines have decreased, the number of methods has also been reduced.
 
-- [Kotlin Android 扩展](https://www.kotlincn.net/docs/tutorials/android-plugin.html)是一个编译器扩展， 可以让你摆脱代码中的 `findViewById()` 调用，并将其替换为合成的编译器生成的属性。
-- [Anko](http://github.com/kotlin/anko) 是一个提供围绕 Android API 的 Kotlin 友好的包装器的库 ，以及一个可以用 Kotlin 代码替换布局 .xml 文件的 DSL。
+The Kotlin team provided a set of tools for Android development that go beyond standard language features:
 
-## 项目截图
+- [Kotlin Android extension](https://www.kotlincn.net/docs/tutorials/android-plugin.html) Is a compiler extension that lets you get rid of the findViewById () call in your code and replace it with a synthetic compiler-generated property.
+- [Anko](http://github.com/kotlin/anko) Is a library of Kotlin-friendly wrappers around the Android API, and a DSL that can replace .xml files with Kotlin code.
 
-- 截图
+## Project screenshot
+
+- screenshot
 
 ![](https://github-1253441343.cos.ap-chengdu.myqcloud.com/kotlinmvp/pt2017_12_09_10_27_10.jpg)
 
 - gif
 
-   <img src="https://github-1253441343.cos.ap-chengdu.myqcloud.com/kotlinmvp/kotlin-mvp.gif" style="width: 30%;">
+  <img src="https://github-1253441343.cos.ap-chengdu.myqcloud.com/kotlinmvp/kotlin-mvp.gif" style="width: 30%;">
 
 
-## 下载体验
+## Download experience
 
-点击[![](https://img.shields.io/badge/Download-apk-green.svg)](http://d.firim.top/kotlinmvp) 或者扫描下方二维码
+Click[![](https://img.shields.io/badge/Download-apk-green.svg)](http://d.firim.top/kotlinmvp) Or scan the two-dimensional code below
 
-**（下方二维码，每日上限100次，如达到上限，还是 clone 源码吧！✧(≖ ◡ ≖✿)）**
-
+**（The following two-dimensional code, the daily limit of 100 times, such as the ceiling, or clone source!✧(≖ ◡ ≖✿)）**
 <img src="https://github-1253441343.cos.ap-chengdu.myqcloud.com/WX20200630-122633%402x.png" width = "250" height = "250" alt="图片名称" align=center />
 
 
 
-## 技术要点
-主要使用的第三方开源框架有：
+## Technical points
+The major third-party open source frameworks are:
 
  - [RxJava](https://github.com/ReactiveX/RxJava)
  - [RxAndroid](https://github.com/ReactiveX/RxAndroid)
@@ -71,34 +63,28 @@ Kotlin 团队为 Android 开发提供了一套超越标准语言功能的工具�
  - [BGABanner-Android](https://github.com/bingoogolapple/BGABanner-Android)
  - [GSYVideoPlayer](https://github.com/CarGuo/GSYVideoPlayer)
 
-模块说明：
+Module Description:
 
- - **每日精选：** 首页采用下拉刷新+RecyclerView 实现，Banner展示每日精选推荐的视频，监听 RecyclerView 的滑动事件，实现 TitleBar 的隐藏显示功能，底部菜单采用高斯模糊的半透明效果，使整个 APP 风格更加清爽。
- - **发现：** 包括关注和分类模块，关注是推荐的作者上传的视频集，分类包括时尚、运动、创意、广告、音乐、旅行、生活、记录、开胃、游戏、萌宠、动画、综艺、搞笑等可自由选择想查看的类型视频。
- - **热门：** 热门排行榜包括周排行、月排行、总排行的视频列表。
- - **搜索：** 根据关键字搜索榜你找到感兴趣的视频。
- - **我的：** 个人主页的相关介绍。
- - **观看记录：** 查看之前看过的视频，按时间进行排序。
+ - **Daily selection：** The home page is implemented with a drop-down refresh + RecyclerView. Banner displays daily featured videos, listens for RecyclerView's slide events, and implements TitleBar's hidden display. The bottom menu uses gaussian blurring and semitransparenting to refresh the entire APP style.
+ - **Find：** Including the attention and classification module, the focus is on the recommended author upload video set, including fashion, sports, creative, advertising, music, travel, life, records, appetizers, games, Meng pets, animation, variety, funny, etc. are free to choose Want to see the type of video.
+ - **Popular：** Top Charts include weekly, monthly, top ranked video listings.
+ - **Search：** According to the keyword search list you find the video of interest.
+ - **Mine：** Personal homepage related introduction.
+ - **Watch History：** View previously seen videos, sorted by time.
 
-## 更新日志
+## Update log
 
-**[最新记录请点击查看](https://github.com/git-xuhao/KotlinMvp/releases)**
-
-**v1.3.0**
-
- - Kotlin版本升级，优化 kotlin 用法；
- - 修复分类详情老接口不能使用问题(原 api 有改动）;
- - 优化代码；
+**[Click to view the latest record](https://github.com/git-xuhao/KotlinMvp/releases)**
 
 **v1.1**
 
- - 去除无用代码，添加观看记录功能。
+ - Remove useless code, add watch record function.
 
 **v1.0**
 
- - 初始化版本，主要功能已经完成。
+ - The initial version, the main function has been completed.
 
-## 关于我
+## About Me
 
  - Email: igeekho@gmail.com
  - Home: [https://xuhaoblog.com](https://xuhaoblog.com)
@@ -107,10 +93,11 @@ Kotlin 团队为 Android 开发提供了一套超越标准语言功能的工具�
 
 ## Thanks
 
-- 感谢所有优秀的开源项目
+- Thanks for all the great open source projects.
+- [Eyepetizer](https://github.com/kaikaixue/Eyepetizer) ：The project was initially saw only started to do, learned a lot, writing my own code style.
 
-## 声明
-**项目中的 API 均来自开眼视频，纯属学习交流使用，不得用于商业用途！**
+## Statement
+**Project API are from the open-eye video, purely for learning to communicate, shall not be used for commercial purposes!**
 
 ## LICENSE
 
