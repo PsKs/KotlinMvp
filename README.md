@@ -76,6 +76,13 @@ Module Description:
 
 **[Click to view the latest record](https://github.com/git-xuhao/KotlinMvp/releases)**
 
+**v1.3.0**
+## Update log
+
+ - Kotlin version upgrade, optimized kotlin usage;
+ - Fix the problem that the old interface of classification details cannot be used (the original api has been changed);
+ - Optimize the code;
+
 **v1.1**
 
  - Remove useless code, add watch record function.
