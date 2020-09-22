@@ -30,7 +30,6 @@ interface SearchContract {
          */
         fun setEmptyView()
 
-
         fun showError(errorMsg: String,errorCode:Int)
     }
 

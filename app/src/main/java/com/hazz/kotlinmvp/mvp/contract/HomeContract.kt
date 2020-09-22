@@ -8,7 +8,6 @@ import com.hazz.kotlinmvp.mvp.model.bean.HomeBean
  * Created by xuhao on 2017/11/8.
  * Home Contract
  */
-
 interface HomeContract {
 
     interface View : IBaseView {
