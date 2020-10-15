@@ -34,7 +34,6 @@ class CustomAppGlideModule : AppGlideModule() {
     /**
      * Open list analysis
      *
-     *
      * Do not open here to avoid adding the same modules twice
      *
      * @return

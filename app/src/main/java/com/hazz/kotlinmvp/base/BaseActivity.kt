@@ -18,11 +18,11 @@ import pub.devrel.easypermissions.EasyPermissions
 /**
  * @author xuhao
  * created: 2017/10/25
- * desc:BaseActivity基类
+ * desc: BaseActivity base class
  */
 abstract class BaseActivity : AppCompatActivity(),EasyPermissions.PermissionCallbacks {
     /**
-     * 多种状态的 View 的切换
+     * Switching of views in multiple states
      */
     protected var mLayoutStatusView: MultipleStatusView? = null
 
@@ -43,30 +43,28 @@ abstract class BaseActivity : AppCompatActivity(),EasyPermissions.PermissionCall
         start()
     }
 
-
     /**
-     *  加载布局
+     *  Load layout
      */
     abstract fun layoutId(): Int
 
     /**
-     * 初始化数据
+     * Initialization data
      */
     abstract fun initData()
 
     /**
-     * 初始化 View
+     * Initialize View
      */
     abstract fun initView()
 
     /**
-     * 开始请求
+     * Start request
      */
     abstract fun start()
 
-
     /**
-     * 打卡软键盘
+     * Clock in soft keyboard
      */
     fun openKeyBord(mEditText: EditText, mContext: Context) {
         val imm = mContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -75,13 +73,12 @@ abstract class BaseActivity : AppCompatActivity(),EasyPermissions.PermissionCall
     }
 
     /**
-     * 关闭软键盘
+     * Close soft keyboard
      */
     fun closeKeyBord(mEditText: EditText, mContext: Context) {
         val imm = mContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(mEditText.windowToken, 0)
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
@@ -90,12 +87,12 @@ abstract class BaseActivity : AppCompatActivity(),EasyPermissions.PermissionCall
 
 
     /**
-     * 重写要申请权限的Activity或者Fragment的onRequestPermissionsResult()方法，
-     * 在里面调用EasyPermissions.onRequestPermissionsResult()，实现回调。
+     * Rewrite the onRequestPermissionsResult() method of the Activity or Fragment to be applied for permissions,
+     * Call EasyPermissions.onRequestPermissionsResult() inside to implement callback.
      *
-     * @param requestCode  权限请求的识别码
-     * @param permissions  申请的权限
-     * @param grantResults 授权结果
+     * @param requestCode  Identification code of permission request
+     * @param permissions  Requested permissions
+     * @param grantResults Authorization result
      */
     override fun onRequestPermissionsResult(requestCode: Int, @NonNull permissions: Array<String>, @NonNull grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -103,41 +100,38 @@ abstract class BaseActivity : AppCompatActivity(),EasyPermissions.PermissionCall
     }
 
     /**
-     * 当权限被成功申请的时候执行回调
+     * Execute callback when permission is successfully applied
      *
-     * @param requestCode 权限请求的识别码
-     * @param perms       申请的权限的名字
+     * @param requestCode Identification code of permission request
+     * @param perms       The name of the requested permission
      */
     override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
-        Log.i("EasyPermissions", "获取成功的权限$perms")
+        Log.i("EasyPermissions", "Get successful permission$perms")
     }
 
     /**
-     * 当权限申请失败的时候执行的回调
+     * Callback executed when permission application fails
      *
-     * @param requestCode 权限请求的识别码
-     * @param perms       申请的权限的名字
+     * @param requestCode Identification code of permission request
+     * @param perms       The name of the requested permission
      */
     override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {
-        //处理权限名字字符串
+        // Processing authority name string
         val sb = StringBuffer()
         for (str in perms) {
             sb.append(str)
             sb.append("\n")
         }
         sb.replace(sb.length - 2, sb.length, "")
-        //用户点击拒绝并不在询问时候调用
+        // The user clicks to reject and is not called when asked
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-            Toast.makeText(this, "已拒绝权限" + sb + "并不再询问", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Permission denied" + sb + "And don't ask again", Toast.LENGTH_SHORT).show()
             AppSettingsDialog.Builder(this)
-                    .setRationale("此功能需要" + sb + "权限，否则无法正常使用，是否打开设置")
-                    .setPositiveButton("好")
-                    .setNegativeButton("不行")
+                    .setRationale("This feature requires" + sb + "Authority，Otherwise it cannot be used normally, whether to open the settings")
+                    .setPositiveButton("It is good")
+                    .setNegativeButton("No way")
                     .build()
                     .show()
         }
     }
-
 }
-
-
